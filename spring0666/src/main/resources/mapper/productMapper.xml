@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="pro">
+	<insert id="create" parameterType="proVo">
+		insert into product values
+		(#{name}, #{content}, #{price}, #{img}, #{id})
+	</insert>
+
+	<select id="one" parameterType="proVo" resultType="proVo">
+		select * from product where id = #{id}
+	</select>
+	<select id="all" resultType="proVo">
+		select * from product
+	</select>
+
+	<update id="up" parameterType="proVo">
+		update product set name = #{name},
+		price = #{price} where id = #{id}
+	</update>
+	<delete id="del" parameterType="proVo">
+		delete from product where id =
+		#{id}
+	</delete>
+
+
+</mapper>
+
+
+
+
+
+
+
+
+
+
+

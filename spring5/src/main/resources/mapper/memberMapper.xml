@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="member">
+	<insert id="create" parameterType="memberVo">
+		insert into MEMBER values (#{id},#{pw},#{name},#{tel})
+	</insert>
+	<select id="all"  resultType="memberVo" >
+		select * from MEMBER
+	</select>
+	<select id="one" parameterType="memberVo" resultType="memberVo">
+		select * from MEMBER where id = #{id}
+	</select>
+	<delete id="del"  parameterType="memberVo">
+		delete from MEMBER  where id = #{id}
+	</delete>
+	<update id="up">
+		update MEMBER set tel = #{tel} where id = #{id}
+	</update>
+	<select id="login" parameterType="memberVo" resultType="memberVo">
+		select * from MEMBER where id = #{id} and pw= #{pw}
+	</select>
+	
+	
+	
+	
+	<select id="check2" parameterType="memberVo" resultType="memberVo">
+		select id from MEMBER where id = #{id}
+	</select>
+	
+</mapper>
+
+
+
+
+
+
+
+
+
+
+

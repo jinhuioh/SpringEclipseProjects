@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="board">
+	<insert id="insert" parameterType="boardVO">
+		insert into board values (null, #{b_title}, #{b_content}, #{b_writer}, now())
+	</insert>
+	<select id="one" parameterType="boardVO" resultType="boardVO">
+		select * from board where b_id = #{b_id}
+	</select>
+	<!-- 최신글로 정렬 -->
+	<select id="list" resultType="boardVO">
+		select * from board order by b_date desc
+	</select>
+	<update id="update" parameterType="boardVO">
+		update board set b_title = #{b_title}, b_content = #{b_content}, b_writer = #{b_writer} where b_id = #{b_id}
+	</update>
+	<delete id="delete" parameterType="boardVO">
+		delete from board where b_id = #{b_id}
+	</delete>
+</mapper>

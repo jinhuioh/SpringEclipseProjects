@@ -1,0 +1,2 @@
+module second_project {
+}

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<typeAliases>
+		<typeAlias type="com.hi.mvcProject.ProductlistVO" alias="productlistVO"/>
+		<typeAlias type="com.hi.mvcProject.BoardVO" alias="boardVO"/>
+		<typeAlias type="com.hi.mvcProject.BookVO" alias="bookVO"/>
+		<typeAlias type="com.hi.mvcProject.Servicecenter2VO" alias="service2VO"/>
+		<typeAlias type="com.hi.mvcProject.ServicecenterfaqVO" alias="faqVO"/>
+	</typeAliases>
+	
+	<mappers>
+		<mapper resource="mapper/productlist.xml"/>
+		<mapper resource="mapper/board.xml"/>
+		<mapper resource="mapper/book.xml"/>
+		<mapper resource="mapper/servicecenter2.xml"/>
+		<mapper resource="mapper/servicecenterfaq.xml"/>
+	</mappers>
+</configuration>
+

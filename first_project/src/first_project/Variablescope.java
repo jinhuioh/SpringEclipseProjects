@@ -1,0 +1,17 @@
+package first_project;
+
+public class Variablescope {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		int v1=15;
+		if(v1>10); {
+			
+		//	int v2;
+	//	v2=v1-10;
+		}
+		
+		 
+	}
+
+}
