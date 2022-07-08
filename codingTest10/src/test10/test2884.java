@@ -19,7 +19,7 @@ import java.util.Scanner;
 //
 //입력 시간은 24시간 표현을 사용한다. 24시간 표현에서 하루의 시작은 0:0(자정)이고, 끝은 23:59(다음날 자정 1분 전)이다. 시간을 나타낼 때, 불필요한 0은 사용하지 않는다.
 public class test2884 {
-
+//틀린이유: M <= 45로 써서 반례 0 45에 대해 생각하지 않았다. 0 0이 나와야하는데 다른답이 나옴
 	public static void main(String[] args) {
 //		두정수 H와 M을 입력받자
 		Scanner scan = new Scanner(System.in);
@@ -31,12 +31,13 @@ public class test2884 {
 		int M = Integer.parseInt(m);
 		
 		if(0 <= H && H <= 23 && 0 <= M && M <= 59) {
-			if(H == 0 && M<=45) {
-				System.out.println("23 "+(M + 15));
-			}else if(M<=45) {
+			if(H == 0 && M < 45) {
+				H = 23;
+				System.out.println(H +" "+ (M + 15));
+			}else if(M < 45) {
 				System.out.println((H - 1) +" "+ (M + 15));
 			}else {
-				System.out.println((H + 1) +" "+ (M -45));
+				System.out.println(H +" "+ (M -45));
 			}
 		}//if
 	}
