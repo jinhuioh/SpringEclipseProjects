@@ -21,7 +21,7 @@ import java.util.Scanner;
 public class test2884 {
 //틀린이유: M <= 45로 써서 반례 0 45에 대해 생각하지 않았다. 0 0이 나와야하는데 다른답이 나옴
 	public static void main(String[] args) {
-//		두정수 H와 M을 입력받자
+//		내장함수 선언하여 두정수 H와 M을 입력받자
 		Scanner scan = new Scanner(System.in);
 //		값 입력받기
 		String h = scan.next();
