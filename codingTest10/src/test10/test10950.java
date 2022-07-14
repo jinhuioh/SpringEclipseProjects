@@ -17,20 +17,40 @@ import com.sun.glass.ui.CommonDialogs.Type;
 public class test10950 {
 
 	public static void main(String[] args) {
-//	 	scanner객체 생성(값 입력받기 위해)
+//		scanner객체 생성(값 입력받기 위해)
 //		값 입력 받기
 		Scanner scan = new Scanner(System.in);
-		int T = scan.nextInt();
-		for(int x=1; x=T; x++){
-			int A = scan.nextInt();
-			int B = scan.nextInt();
+		String T1 = scan.next();
+		int T = Integer.parseInt(T1);
 
-			if (0 < A && B < 10) {
+		int A,B;
+		for(int i=0; i<T; i++) {
+			A = scan.nextInt();
+			B = scan.nextInt();
+			if(0 < A && B < 10) {
 				System.out.println(A+B);
-			}//for
-		}//if
+			}
+		}
 		
-	}
-
+		
+//		int arr[] = new int[T];
+//		for(int x=0; x<T; x++){
+//			int A = scan.nextInt();
+//			int B = scan.nextInt();
+////			if (0 < A && B < 10) {
+//			arr[T] = A + B;
+////			}//if
+//		}//for
+//		scan.close();
+//		for(int k : arr) {
+//			System.out.println(k);
+////		아래와 같은 코드이다.
+////		for (int _i = 0; _i < arr.length; _i++) {
+////			int k = arr[_i];
+////			System.out.println(k);
+////			}
+//		}
+		
+	}//public
 
 }
