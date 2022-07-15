@@ -3,6 +3,7 @@ package test10;
 import java.util.Scanner;
 
 import com.sun.glass.ui.CommonDialogs.Type;
+import com.sun.xml.internal.bind.v2.schemagen.xmlschema.List;
 
 //문제
 //두 정수 A와 B를 입력받은 다음, A+B를 출력하는 프로그램을 작성하시오.
@@ -14,6 +15,7 @@ import com.sun.glass.ui.CommonDialogs.Type;
 //
 //출력
 //각 테스트 케이스마다 A+B를 출력한다.
+// 입력값을 한번에 리스트로 받아서.. 한번에 결과값들 출력하는걸로 해보고싶은데.. 어케해야할지 모르겠음..
 public class test10950 {
 
 	public static void main(String[] args) {
@@ -22,34 +24,15 @@ public class test10950 {
 		Scanner scan = new Scanner(System.in);
 		String T1 = scan.next();
 		int T = Integer.parseInt(T1);
-
 		int A,B;
 		for(int i=0; i<T; i++) {
 			A = scan.nextInt();
 			B = scan.nextInt();
+			
 			if(0 < A && B < 10) {
 				System.out.println(A+B);
-			}
-		}
-		
-		
-//		int arr[] = new int[T];
-//		for(int x=0; x<T; x++){
-//			int A = scan.nextInt();
-//			int B = scan.nextInt();
-////			if (0 < A && B < 10) {
-//			arr[T] = A + B;
-////			}//if
-//		}//for
-//		scan.close();
-//		for(int k : arr) {
-//			System.out.println(k);
-////		아래와 같은 코드이다.
-////		for (int _i = 0; _i < arr.length; _i++) {
-////			int k = arr[_i];
-////			System.out.println(k);
-////			}
-//		}
+			}//if
+		}//for
 		
 	}//public
 
