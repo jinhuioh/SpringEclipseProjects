@@ -16,6 +16,7 @@ import com.sun.xml.internal.bind.v2.schemagen.xmlschema.List;
 //출력
 //각 테스트 케이스마다 A+B를 출력한다.
 // 입력값을 한번에 리스트로 받아서.. 한번에 결과값들 출력하는걸로 해보고싶은데.. 어케해야할지 모르겠음..
+//==> 15552에 답 적어놓음!
 public class test10950 {
 
 	public static void main(String[] args) {
