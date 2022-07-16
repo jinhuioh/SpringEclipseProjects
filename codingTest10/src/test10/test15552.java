@@ -42,8 +42,9 @@ public class test15552 {
 			int A = Integer.parseInt(strs[0]);
 			int B = Integer.parseInt(strs[1]);
 				if(T<=1000000 && 1<=A && A<=1000 && 1<=B && B<=1000) {
-	//			System.out.println(A+B);
-				//system.out대신 bw.write를 쓰는 이유는
+
+				//System.out.println(A+B);
+				//system.out.println()대신 bw.write를 쓰는 이유는
 				//bw.write가 속도가 빠르고 더 효율적이기 때문이다.
 				//"\n"으로 답 1개당 한 줄씩 띄어서 출력되도록 함.
 				bw.write(Integer.toString(A + B) + "\n");
