@@ -30,7 +30,9 @@ public class test15552 {
 //		버퍼링이 없으면 read() 또는 readLine()을 호출할 때마다 파일에서 바이트를 읽고
 //		문자로 변환한 다음 반환할 수 있으므로 매우 비효율적일 수 있다.
 //		객체 생성
+		//입력한 것 저장
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		//입력 저장한 것 출력
 		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 		int T = Integer.parseInt(br.readLine());//해당 행을 실행시키기 위해 throw Exception을 해준다.
 	
