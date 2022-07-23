@@ -49,6 +49,9 @@ public class test15552 {
 				//system.out.println()대신 bw.write를 쓰는 이유는
 				//bw.write가 속도가 빠르고 더 효율적이기 때문이다.
 				//"\n"으로 답 1개당 한 줄씩 띄어서 출력되도록 함.
+				
+//				toString():객체가 가지고 있는 정보나 값들을 문자열로 만들어 리턴하는 메소드
+//				설명=>  https://jamesdreaming.tistory.com/142
 				bw.write(Integer.toString(A + B) + "\n");
 	//			해설: 이렇게 하면 A + B를 계산한 결과를 바로 출력하는 대신에, 버퍼에 출력할 데이터를 버퍼에 담을 수 있습니다.
 	//			이 때 버퍼에는 문자열을 담아야 하므로, Integer.toString()을 이용해 계산한 A + B의 결과를 문자열로 형변환하였고,
