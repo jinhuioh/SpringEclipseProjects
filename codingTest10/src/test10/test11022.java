@@ -26,6 +26,7 @@ public class test11022 {
 		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 		
 		int T = Integer.parseInt(br.readLine());
+//		Integer.toString(T)의 타입 확인
 		System.out.println(Integer.toString(T).getClass().getName());
 		for(int i=1; i<T+1; i++) {
 			//배열생성
