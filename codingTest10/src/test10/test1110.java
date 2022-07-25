@@ -26,36 +26,39 @@ public class test1110 {
 		//값을 입력받기 위해 객체 생성
 		Scanner scan = new Scanner(System.in);
 		
-		int cnt = 0;
+		int N = 0;
 		//값 입력
 		String F = scan.next();
 		String S = F;
-		StringTokenizer st;
 		//값의 길이가 1자리수이면 앞에 0을 붙여준다.
 		if(F.length()<2) {
 			S = "0"+F;
 		}//if
 		while(true){
-			int sum=0;
-//			
-			for(int i=0; i<2; i++) {
-				//sum = sum + S.charAt(i)
-//				sum=2
-//				sum=8
-				System.out.println("sum은: "+ (sum += S.charAt(i)-48));
-			}
-//			st = new StringTokenizer(S);
-//			String X = (st.nextToken()+st.nextToken());
-			
-			S = S.charAt(1)+Integer.toString(sum%10);
-			
+			//S1객체 생성
+			int S1=0;
+			//내가 입력한 값
 			System.out.println("S는: "+S);
-			cnt++;
+			//입력값이 26이면 2+6=8을 계산하는 과정
+			S1 =((Integer.parseInt(S)/10) + (Integer.parseInt(S)%10));
+			System.out.println("S1는: "+S1);
+			
+			//S의 두번째 자리수 6과 더한값 8을 연결해주는 부분 =>68을 만들어냄.
+			//유니코드 오류를 피하기 위해 Integer.toString()을 사용
+			//객체 S에 넣어줘야 while문을 돌면서 S가 계속 바뀌어 연결되어 돌아갈 수 있다.
+			//처음에 S1,S2,S3로 잡고 해서 S에 새로운 값이 안들어가고 처음 입력한 값 그래도 있어서 안풀렸음.
+			S = Integer.toString(Integer.parseInt(S)%10) + Integer.toString((S1)%10);
+			System.out.println("두번째S는: "+S);
+			N++;//카운트 +1
+			//처음 입력값과 같으면 break
 			if(F.equals(S) || S.equals("0"+F)) {
 				break;
 			}
 		}//while
-		System.out.println("cnt는: "+ cnt);
+		//총 카운트  수 출력
+		if(N>=0 && N<=99) {
+			System.out.println(N);
+		}
 	}
 
 }
