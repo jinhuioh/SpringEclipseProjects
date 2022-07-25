@@ -25,31 +25,37 @@ public class test1110 {
 	public static void main(String[] args) {
 		//값을 입력받기 위해 객체 생성
 		Scanner scan = new Scanner(System.in);
-		while(scan.hasNext()) {//hasNext객체로 null값이 들어오면 while문 끝냄.
-			//입력이 들어오면 strs에 넣음
-			String[] strs = scan.nextLine().split("");
-//			첫번째 값은 A1, 두번째 값은 B1으로 지정
-			int A1 = Integer.parseInt(strs[0]);
-			int B1 = Integer.parseInt(strs[1]);
-			int C = A1+B1;
+		
+		int cnt = 0;
+		//값 입력
+		String F = scan.next();
+		String S = F;
+		StringTokenizer st;
+		//값의 길이가 1자리수이면 앞에 0을 붙여준다.
+		if(F.length()<2) {
+			S = "0"+F;
+		}//if
+		while(true){
+			int sum=0;
+//			
+			for(int i=0; i<2; i++) {
+				//sum = sum + S.charAt(i)
+//				sum=2
+//				sum=8
+				System.out.println("sum은: "+ (sum += S.charAt(i)-48));
+			}
+//			st = new StringTokenizer(S);
+//			String X = (st.nextToken()+st.nextToken());
 			
-			if(A1<99 && A1>0 && B1<99 && B1>0) {
-				if(C<10) {
-					String c1 = Integer.toString(B1)+ Integer.toString(C);
-					if((Integer.toString(A1)+Integer.toString(B1)) == c1) {
-						
-					}
-				}else {
-					//나머지 연산자 %로 C의 나머지(두번째 자리수)를 추출
-					int C1 = C % 10;
-					String c2 = Integer.toString(B1)+ Integer.toString(C1);
-
-					if((Integer.toString(A1)+Integer.toString(B1)) == c2) {
-						
-					}
-				}//if
-			}//if
+			S = S.charAt(1)+Integer.toString(sum%10);
+			
+			System.out.println("S는: "+S);
+			cnt++;
+			if(F.equals(S) || S.equals("0"+F)) {
+				break;
+			}
 		}//while
+		System.out.println("cnt는: "+ cnt);
 	}
 
 }
