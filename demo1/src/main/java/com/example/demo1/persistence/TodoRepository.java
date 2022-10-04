@@ -19,11 +19,12 @@ import com.example.demo1.model.TodoEntity;
 @Repository
 public interface TodoRepository extends JpaRepository<TodoEntity, String> {
 	// 스프링 데이터 jpa가 메서드 이름을 파싱해서 select * from TodoRepository Wehre userId = '{userId}'와 같은 쿼리를 작성해 실행한다.
-//	List<TodoEntity> findByUserId(String userId);
+	//create, read 메서드에서 사용
+	List<TodoEntity> findByUserId(String userId);
 	
 	//@Query를 이용하여 위와 같이 메서드를 작성할 수 있다.
 	// ?1은 메서드의 매개변수의 순서 위치이다. 
-	@Query("select * from Todo t where t.userId = ?1")
-	List<TodoEntity> findByUserId(String userId);
+//	@Query("select * from Todo t where t.userId = ?1")
+//	List<TodoEntity> findByUserId(String userId);
 	
 }
