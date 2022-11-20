@@ -134,29 +134,68 @@ public class codingtest1 {
 //		예제 출력 1 
 //		1 4 2 3
 		
+//		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+//		
+//		
+////		첫째줄입력
+//		StringTokenizer st = new StringTokenizer(br.readLine()," ");
+//		int a = Integer.parseInt(st.nextToken());
+//		int b = Integer.parseInt(st.nextToken());
+//		
+//		
+////		둘째줄 입력
+//		st = new StringTokenizer(br.readLine()," ");
+//		
+////		b보다 작은 값 담는 객체
+//		StringBuilder sb = new StringBuilder();
+//		
+//		for (int i=0; i<a; i++){
+//			int value = Integer.parseInt(st.nextToken());
+//			
+//			if(value < b) {
+//				sb.append(value).append(" ");
+//			}
+//		}
+//		System.out.println(sb);
+	
+		
+		
+//		=========================================================================
+//		문제
+//		세 정수 A, B, C가 주어진다. 이때, 두 번째로 큰 정수를 출력하는 프로그램을 작성하시오. 
+//
+//		입력
+//		첫째 줄에 세 정수 A, B, C가 공백으로 구분되어 주어진다. (1 ≤ A, B, C ≤ 100)
+//
+//		출력
+//		두 번째로 큰 정수를 출력한다.
+//
+//		예제 입력 1 
+//		20 30 10
+//		예제 출력 1 
+//		20
+		
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		
+		StringTokenizer st = new StringTokenizer(br.readLine(), " ");
+//		공백으로 세개의 숫자 분류
 		
-//		첫째줄입력
-		StringTokenizer st = new StringTokenizer(br.readLine()," ");
-		int a = Integer.parseInt(st.nextToken());
-		int b = Integer.parseInt(st.nextToken());
+		int[] arr = new int[3];
 		
+		for(int i=0; i<3; i++) {
+			arr[i] = Integer.parseInt(st.nextToken());
+		}
 		
-//		둘째줄 입력
-		st = new StringTokenizer(br.readLine()," ");
-		
-//		b보다 작은 값 담는 객체
-		StringBuilder sb = new StringBuilder();
-		
-		for (int i=0; i<a; i++){
-			int value = Integer.parseInt(st.nextToken());
-			
-			if(value < b) {
-				sb.append(value).append(" ");
+		for(int i =0; i<2; i++) {
+			for(int j =i+1; j<3; j++) {
+				if(arr[i] > arr[j]) {
+					int temp = arr[i];
+					arr[i] = arr[j];
+					arr[j] = temp;
+				}	
 			}
 		}
-		System.out.println(sb);
+		System.out.println(arr[1]);
 	}
 
 }
