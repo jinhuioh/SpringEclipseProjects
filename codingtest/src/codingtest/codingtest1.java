@@ -175,27 +175,56 @@ public class codingtest1 {
 //		예제 출력 1 
 //		20
 		
+//		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+//		
+//		StringTokenzer st = new StringTokenizer(br.readLine(), " ");
+////		공백으로 세개의 숫자 분류
+//		
+//		int[] arr = new int[3];
+//		
+//		for(int i=0; i<3; i++) {
+//			arr[i] = Integer.parseInt(st.nextToken());
+//		}
+//		
+//		for(int i =0; i<2; i++) {
+//			for(int j =i+1; j<3; j++) {
+//				if(arr[i] > arr[j]) {
+//					int temp = arr[i];
+//					arr[i] = arr[j];
+//					arr[j] = temp;
+//				}	
+//			}
+//		}
+//		System.out.println(arr[1]);
+		
+//		문제
+//		총 N개의 정수가 주어졌을 때, 정수 v가 몇 개인지 구하는 프로그램을 작성하시오.
+//		예제 입력 1 
+//		11
+//		1 4 1 2 4 2 4 2 3 4 4
+//		2
+//		예제 출력 1 
+//		3
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		
-		StringTokenizer st = new StringTokenizer(br.readLine(), " ");
-//		공백으로 세개의 숫자 분류
-		
-		int[] arr = new int[3];
-		
-		for(int i=0; i<3; i++) {
-			arr[i] = Integer.parseInt(st.nextToken());
-		}
-		
-		for(int i =0; i<2; i++) {
-			for(int j =i+1; j<3; j++) {
-				if(arr[i] > arr[j]) {
-					int temp = arr[i];
-					arr[i] = arr[j];
-					arr[j] = temp;
-				}	
+		String a = br.readLine();
+		StringTokenizer st = new StringTokenizer(br.readLine()," ");
+		String b = br.readLine();
+//		System.out.println(a+" ."+st+" ."+b);
+		int count = 0;
+//		for문을 돌려서 b와 비교하여서 같으면 count +=1하기!
+		for (int i=0; i< Integer.parseInt(a); i++) {
+			String one = st.nextToken();
+			System.out.println("one~"+one);
+			System.out.println("b~"+b);
+			if(one == b) {
+				System.out.println(".....");
+				count ++;
+				System.out.println(count);
 			}
 		}
-		System.out.println(arr[1]);
+	
+		System.out.println(count);
 	}
 
 }
