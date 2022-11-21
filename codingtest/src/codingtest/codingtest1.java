@@ -1,5 +1,6 @@
 package codingtest;
 
+import java.awt.Window.Type;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -210,18 +211,20 @@ public class codingtest1 {
 		String a = br.readLine();
 		StringTokenizer st = new StringTokenizer(br.readLine()," ");
 		String b = br.readLine();
-//		System.out.println(a+" ."+st+" ."+b);
 		int count = 0;
 //		for문을 돌려서 b와 비교하여서 같으면 count +=1하기!
 		for (int i=0; i< Integer.parseInt(a); i++) {
 			String one = st.nextToken();
-			System.out.println("one~"+one);
-			System.out.println("b~"+b);
-			if(one == b) {
-				System.out.println(".....");
+			
+			if(Integer.parseInt(one) == Integer.parseInt(b)) {
 				count ++;
-				System.out.println(count);
+//				System.out.println(count);
 			}
+			
+//			왜 string까리 비교하면 틀리는가>?
+//			if(one == b) {
+//				count ++;
+//			}
 		}
 	
 		System.out.println(count);
