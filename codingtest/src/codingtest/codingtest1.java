@@ -206,28 +206,34 @@ public class codingtest1 {
 //		2
 //		예제 출력 1 
 //		3
+//		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+//		
+//		String a = br.readLine();
+//		StringTokenizer st = new StringTokenizer(br.readLine()," ");
+//		String b = br.readLine();
+//		int count = 0;
+////		for문을 돌려서 b와 비교하여서 같으면 count +=1하기!
+//		for (int i=0; i< Integer.parseInt(a); i++) {
+//			String one = st.nextToken();
+//			
+//			if(Integer.parseInt(one) == Integer.parseInt(b)) {
+//				count ++;
+////				System.out.println(count);
+//			}
+//			
+////			왜 string까리 비교하면 틀리는가>?
+////			if(one == b) {
+////				count ++;
+////			}
+//		}
+//	
+//		System.out.println(count);
+		
+		
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		
-		String a = br.readLine();
-		StringTokenizer st = new StringTokenizer(br.readLine()," ");
-		String b = br.readLine();
-		int count = 0;
-//		for문을 돌려서 b와 비교하여서 같으면 count +=1하기!
-		for (int i=0; i< Integer.parseInt(a); i++) {
-			String one = st.nextToken();
-			
-			if(Integer.parseInt(one) == Integer.parseInt(b)) {
-				count ++;
-//				System.out.println(count);
-			}
-			
-//			왜 string까리 비교하면 틀리는가>?
-//			if(one == b) {
-//				count ++;
-//			}
-		}
-	
-		System.out.println(count);
+		String name = br.readLine();
+		System.out.println(name+"??!");
 	}
 
 }
