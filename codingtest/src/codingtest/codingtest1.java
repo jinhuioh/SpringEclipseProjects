@@ -77,35 +77,66 @@ public class codingtest1 {
 //		40 40 40
 //		예제 출력 1 
 //		M 45
+//		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+//		int count1 = 0;//영식요금제
+//		int count2 = 0;//민식요금제
+//		
+//		int num1 = Integer.parseInt(br.readLine());
+//		StringTokenizer st = new StringTokenizer(br.readLine(), " ");
+//		
+//		for(int i =0; i<num1; i++) {
+//			int one = Integer.parseInt(st.nextToken());
+////			영식요금제
+//			int youn = 1+one/30;
+//			count1 += youn*10;
+////			민식요금제
+//			int minsik = 1+one/60; 
+//			count2 += minsik*15;
+//		}//for
+////		System.out.println(count1+" "+count2);
+//		if(count1 >count2) {
+//			System.out.println("M "+count2);
+//		}
+//		else if(count1 == count2) {
+//			System.out.println("Y M "+count1);
+//			
+//		}
+//		else {
+//			System.out.println("Y "+count1);
+//			
+//		}
+//		int count =0;
+//		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+//		int a = Integer.parseInt(br.readLine());
+//		String b = br.readLine();
+//		for(int i =2; i>=0; i--) {
+//			int bone = b.charAt(i) - '0';
+//			int mul = bone*a;
+//			System.out.println(mul);
+//			if(i==1) {
+//				mul = mul*10;
+//			}
+//			else if(i==0) {
+//				mul = mul*100;
+//			}
+//			count +=mul;
+//		
+//		}
+//		System.out.println(count);
+
+		
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		int count1 = 0;//영식요금제
-		int count2 = 0;//민식요금제
 		
-		int num1 = Integer.parseInt(br.readLine());
-		StringTokenizer st = new StringTokenizer(br.readLine(), " ");
-		
-		for(int i =0; i<num1; i++) {
-			int one = Integer.parseInt(st.nextToken());
-//			영식요금제
-			int youn = 1+one/30;
-			count1 += youn*10;
-//			민식요금제
-			int minsik = 1+one/60; 
-			count2 += minsik*15;
-		}//for
-//		System.out.println(count1+" "+count2);
-		if(count1 >count2) {
-			System.out.println("M "+count2);
-		}
-		else if(count1 == count2) {
-			System.out.println("Y M "+count1);
-			
+		StringTokenizer st = new StringTokenizer(br.readLine()," ");
+		int a = Integer.parseInt(st.nextToken());
+		int b = Integer.parseInt(st.nextToken());
+		int c = Integer.parseInt(st.nextToken());
+		if(b-a > c-b) {
+			System.out.println((b-a-1));
 		}
 		else {
-			System.out.println("Y "+count1);
-			
+			System.out.println((c-b-1));
 		}
-	
 	}
 
 }
