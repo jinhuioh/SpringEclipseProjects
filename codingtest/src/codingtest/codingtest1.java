@@ -6,6 +6,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.IntSummaryStatistics;
+import java.util.List;
 import java.util.Scanner;
 import java.util.StringTokenizer;
 
@@ -139,9 +145,45 @@ public class codingtest1 {
 //		}//else
 		
 		
+//		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+//		int a = Integer.parseInt(br.readLine());
+//		int sum = 0;
+//		for(int i=0; i<=a; i++) {
+//			for(int j=i; j<=a; j++) {
+//				sum = sum + i + j;
+//			}
+//		}
+//		System.out.println(sum);
+//		
+
 		
-		
-		
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		int a = Integer.parseInt(br.readLine());
+		for(int i =0; i<a; i++) {
+			int sum = 0;
+//			문자열리스트 입력
+			String[] num = (br.readLine().split(" "));
+//			짝수만 담을 리스트 생성
+			ArrayList nums = new ArrayList();
+
+			//짝수만 담기
+			for(int i1=0; i1<num.length; i1++) {
+			
+				int one = Integer.parseInt(num[i1]);
+				
+				if(one %2 ==0) {
+//					짝수의 누적 합 구하기.
+					sum = sum + one; 	
+//					짝수값 리스트에 담기.
+					nums.add(one);
+				}//if
+			}
+	
+//			짝수의 최소값
+			int mins = (int) Collections.min(nums);
+//			정답 출력
+			System.out.println(sum+" "+mins);
+		}//for
 		
 		
 	}
