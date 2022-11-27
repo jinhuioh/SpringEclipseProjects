@@ -189,28 +189,50 @@ public class codingtest1 {
 //		}//for
 
 		
-		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-		
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-//		버퍼로 스트링 배열 입력
-		String [] nums = br.readLine().split(" ");
+//		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+//		
+//		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+////		버퍼로 스트링 배열 입력
+//		String [] nums = br.readLine().split(" ");
+//
+//		
+//		//		스트링 배열을 int로 바꿈
+//		int arr[] = new int[3];
+//		
+//		for(int i=0; i<3; i++) arr[i] = Integer.parseInt(nums[i]);
+//		
+////		정렬
+//		Arrays.sort(arr);
+//		
+////		두번째 줄 입력
+//		String [] nums2 = br.readLine().split("");
+//		
+////		nums2의 i번째 단어의 첫번째(charAt(0))만 꺼내서 아스키코드이므로 -'A'를 해준다. 해당 인덱스의 arr값을 꺼내주면 
+////		A면 0번째 arr인덱스 숫자값이 나오고 C이면 2번째 인덱스 값이 나옴..
+//		for(int i=0; i<3; i++) bw.write(arr[nums2[i].charAt(0) - 'A']+" ");
+//		bw.flush();
 
 		
-		//		스트링 배열을 int로 바꿈
-		int arr[] = new int[3];
 		
-		for(int i=0; i<3; i++) arr[i] = Integer.parseInt(nums[i]);
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		
-//		정렬
-		Arrays.sort(arr);
+		int b = Integer.parseInt(br.readLine());
+		String[] nums = br.readLine().split(" ");
+		int sum = 0;
+		int num = 1;
+		for (String one : nums) {
+			if(one.equals("0")) {
+//				0인 경우 초기화
+				num = 1;
+			} else {
+				sum = sum + num;
+				num ++;
+			}
+		}
+		System.out.println(sum);
 		
-//		두번째 줄 입력
-		String [] nums2 = br.readLine().split("");
 		
-//		nums2의 i번째 단어의 첫번째(charAt(0))만 꺼내서 아스키코드이므로 -'A'를 해준다. 해당 인덱스의 arr값을 꺼내주면 
-//		A면 0번째 arr인덱스 숫자값이 나오고 C이면 2번째 인덱스 값이 나옴..
-		for(int i=0; i<3; i++) bw.write(arr[nums2[i].charAt(0) - 'A']+" ");
-		bw.flush();
+		
 	}
 
 }
