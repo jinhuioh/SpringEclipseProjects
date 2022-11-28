@@ -213,26 +213,35 @@ public class codingtest1 {
 //		bw.flush();
 
 		
-		
+
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+//		입력받기
 		
-		int b = Integer.parseInt(br.readLine());
-		String[] nums = br.readLine().split(" ");
-		int sum = 0;
-		int num = 1;
-		for (String one : nums) {
-			if(one.equals("0")) {
-//				0인 경우 초기화
-				num = 1;
-			} else {
-				sum = sum + num;
-				num ++;
-			}
+		int one = Integer.parseInt(br.readLine());
+		
+		for (int i=0; i<one; i++) {
+		int num = Integer.parseInt(br.readLine());
+		int answer = 0;
+		int answer2 = 0;
+		int answer3 = 0;
+		int answer4 = 0;
+		
+		
+		answer = num/25;
+		num = num%25;
+		
+		answer2 = num/10;
+		num = num%10;
+
+		answer3 = num/5;
+		num = num%5;
+		
+		
+		answer4 = num;
+			
+		
+		System.out.println(answer+" "+answer2+" "+answer3+" "+answer4);
 		}
-		System.out.println(sum);
-		
-		
-		
 	}
 
 }
