@@ -13,6 +13,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.IntSummaryStatistics;
 import java.util.List;
 import java.util.StringTokenizer;
@@ -212,36 +213,85 @@ public class codingtest1 {
 //		for(int i=0; i<3; i++) bw.write(arr[nums2[i].charAt(0) - 'A']+" ");
 //		bw.flush();
 
+	
+//		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+//		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+//		
+//		
+//		boolean[] arr = new boolean[31];
+//		
+//		for(int i = 0; i<28; i++) {
+//			int n = Integer.parseInt(br.readLine());
+//			arr[n]=true;
+//			
+//		}
+//		for(int i = 1; i<=30; i++) {
+//			if (!arr[i]) {
+//				System.out.println(i);
+//			}
+//		}
 		
-
+		
+//		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+////		HashSet은 collection중 set의 파생클래스로 중복허용안함,순서개념없음(sort사용 불가능)
+//		HashSet<Integer> hs = new HashSet<Integer>();
+//		for(int i = 0; i<10; i++) {
+//			hs.add(Integer.parseInt(br.readLine()) % 42);
+//		}//for
+//		
+//		br.close();
+//		System.out.println(hs.size());
+		
+//		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+//		int[] arr = new int[10];
+//		boolean bl;
+//		int cnt = 0;
+//		
+//		for(int i = 0; i<arr.length; i++) {
+//			arr[i] = Integer.parseInt(br.readLine()) % 42;
+//		
+//		}
+//		for(int i=0; i<10; i++) {
+//			bl = false;
+//			for(int k = i+1; k< arr.length; k++) {
+//				if(arr[i] == arr[k]) {
+//				bl = true;
+//				break;
+//			}
+//		}
+//		if(bl == false) {
+//			cnt++;
+//		}
+//		}//for
+//		System.out.println(cnt);
+	
+		
+		
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-//		입력받기
+		int num = Integer.parseInt(br.readLine());	
+		for(int i=0; i<num; i++) {
+			String[] arr = br.readLine().split(" ");
+			arr[0] = "0";
+			double sum = 0;
+			double avg = 0;
+			double count = 0;
+			Double answer;
+			for(int j=0; j<arr.length; j++) {
+				sum += (Integer.parseInt(arr[j]));
+				avg = sum/(arr.length-1);
+			}//for
+			for(int j1=0; j1<arr.length; j1++) {
+				if (Integer.parseInt(arr[j1])>avg) {
+					count +=1;
+					
+				}//if
+				
+			}//for
+			answer= (double) ((100*count)/(arr.length-1));
+			String result = String.format("%.3f", answer);
+			System.out.println(result+"%");
+		}//for
 		
-		int one = Integer.parseInt(br.readLine());
-		
-		for (int i=0; i<one; i++) {
-		int num = Integer.parseInt(br.readLine());
-		int answer = 0;
-		int answer2 = 0;
-		int answer3 = 0;
-		int answer4 = 0;
-		
-		
-		answer = num/25;
-		num = num%25;
-		
-		answer2 = num/10;
-		num = num%10;
-
-		answer3 = num/5;
-		num = num%5;
-		
-		
-		answer4 = num;
-			
-		
-		System.out.println(answer+" "+answer2+" "+answer3+" "+answer4);
-		}
 	}
 
 }
