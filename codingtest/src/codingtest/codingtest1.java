@@ -267,30 +267,87 @@ public class codingtest1 {
 	
 		
 		
+//		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+//		int num = Integer.parseInt(br.readLine());	
+//		for(int i=0; i<num; i++) {
+//			String[] arr = br.readLine().split(" ");
+//			arr[0] = "0";
+//			double sum = 0;
+//			double avg = 0;
+//			double count = 0;
+//			Double answer;
+//			for(int j=0; j<arr.length; j++) {
+//				sum += (Integer.parseInt(arr[j]));
+//				avg = sum/(arr.length-1);
+//			}//for
+//			for(int j1=0; j1<arr.length; j1++) {
+//				if (Integer.parseInt(arr[j1])>avg) {
+//					count +=1;
+//					
+//				}//if
+//				
+//			}//for
+//			answer= (double) ((100*count)/(arr.length-1));
+//			String result = String.format("%.3f", answer);
+//			System.out.println(result+"%");
+//		}//for
+
+		
+		
+		
+//		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+//		String[] nums = br.readLine().split(" ");
+//		int num = Integer.parseInt(nums[1]);
+////		답 초기값
+//		int answer = 0;
+//		String[] arr = br.readLine().split(" ");
+//		
+//		for(int i=0; i<arr.length-2; i++) {
+//			int one1 = Integer.parseInt(arr[i]);
+//			
+//			for(int j=i+1; j<arr.length-1; j++) {
+//				int one2 = Integer.parseInt(arr[j]);
+//				
+//				for(int k=j+1; k<arr.length; k++) {
+//					int one3 = Integer.parseInt(arr[k]);
+//					int one = one1 + one2 + one3;
+//					
+//					if(one<= num && one > answer) {
+//						answer = one;
+//					}//if
+//				}
+//			}
+//		}//for
+//	System.out.println(answer); 
+		
+		
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		int num = Integer.parseInt(br.readLine());	
-		for(int i=0; i<num; i++) {
-			String[] arr = br.readLine().split(" ");
-			arr[0] = "0";
-			double sum = 0;
-			double avg = 0;
-			double count = 0;
-			Double answer;
-			for(int j=0; j<arr.length; j++) {
-				sum += (Integer.parseInt(arr[j]));
-				avg = sum/(arr.length-1);
-			}//for
-			for(int j1=0; j1<arr.length; j1++) {
-				if (Integer.parseInt(arr[j1])>avg) {
-					count +=1;
-					
-				}//if
+		int num = Integer.parseInt(br.readLine());
+		int high = 0;
+		int number = 0;
+		for(int i = 0; i< num; i++) {
+			StringTokenizer st = new StringTokenizer(br.readLine());
+			int h = Integer.parseInt(st.nextToken());
+			int n = Integer.parseInt(st.nextToken());
+			int one = Integer.parseInt(st.nextToken());
+			if (one<=h) {
+				high = one;
+				number = (one/h) + 1;
+				if(one == h) {
+					number -= 1;
+				}
+			}else {
 				
-			}//for
-			answer= (double) ((100*count)/(arr.length-1));
-			String result = String.format("%.3f", answer);
-			System.out.println(result+"%");
-		}//for
+				high = one % h;
+				number = (one/h) + 1;
+			}
+			if (num<10) {
+				System.out.println(high+"0"+number);
+			}else {
+			System.out.println(high+""+number);
+			}
+		}
+		
 		
 	}
 
