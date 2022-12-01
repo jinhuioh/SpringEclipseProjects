@@ -325,30 +325,23 @@ public class codingtest1 {
 		int num = Integer.parseInt(br.readLine());
 		int high = 0;
 		int number = 0;
+		StringBuilder sb = new StringBuilder();
 		for(int i = 0; i< num; i++) {
 			StringTokenizer st = new StringTokenizer(br.readLine());
 			int h = Integer.parseInt(st.nextToken());
 			int n = Integer.parseInt(st.nextToken());
 			int one = Integer.parseInt(st.nextToken());
-			if (one<=h) {
-				high = one;
-				number = (one/h) + 1;
-				if(one == h) {
-					number -= 1;
-				}
-			}else {
-				
-				high = one % h;
-				number = (one/h) + 1;
-			}
-			if (num<10) {
-				System.out.println(high+"0"+number);
-			}else {
-			System.out.println(high+""+number);
-			}
+			
+		
+		
+		if(one % h == 0) {
+			sb.append((h*100)+(one/h)).append('\n');
+		}else {
+			sb.append(((one % h)*100)+((one/h)+1)).append('\n');
+			
 		}
-		
-		
+		}//for
+		System.out.println(sb);
 	}
 
 }
