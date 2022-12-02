@@ -356,11 +356,20 @@ public class codingtest1 {
 //		첫째 줄에 문자열 S가 주어진다. S는 알파벳 소문자로만 이루어져 있고, 길이는 1,000보다 작거나 같다.
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		
-		StringTokenizer word = new StringTokenizer(br.readLine());
-	
-	
-	
-	
+		String s = br.readLine();
+		
+		List<String> list = new ArrayList<>();
+		
+		for(int i=0; i< s.length(); i++) {
+			list.add(s.substring(i));
+		}
+		
+		Collections.sort(list);
+		
+		for(int i=0; i< list.size(); i++) {
+			System.out.println(list.get(i));
+		}
+
 	
 	}
 
