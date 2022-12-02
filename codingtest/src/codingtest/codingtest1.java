@@ -321,27 +321,47 @@ public class codingtest1 {
 //	System.out.println(answer); 
 		
 		
+//		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+//		int num = Integer.parseInt(br.readLine());
+//		int high = 0;
+//		int number = 0;
+//		StringBuilder sb = new StringBuilder();
+//		for(int i = 0; i< num; i++) {
+//			StringTokenizer st = new StringTokenizer(br.readLine());
+//			int h = Integer.parseInt(st.nextToken());
+//			int n = Integer.parseInt(st.nextToken());
+//			int one = Integer.parseInt(st.nextToken());
+//			
+//		
+//		
+//		if(one % h == 0) {
+//			sb.append((h*100)+(one/h)).append('\n');
+//		}else {
+//			sb.append(((one % h)*100)+((one/h)+1)).append('\n');
+//			
+//		}
+//		}//for
+//		System.out.println(sb);
+		
+		
+//		문제
+//		접미사 배열은 문자열 S의 모든 접미사를 사전순으로 정렬해 놓은 배열이다.
+//
+//		baekjoon의 접미사는 baekjoon, aekjoon, ekjoon, kjoon, joon, oon, on, n 으로 총 8가지가 있고,
+//		이를 사전순으로 정렬하면, aekjoon, baekjoon, ekjoon, joon, kjoon, n, on, oon이 된다.
+//
+//		문자열 S가 주어졌을 때, 모든 접미사를 사전순으로 정렬한 다음 출력하는 프로그램을 작성하시오.
+//
+//		입력
+//		첫째 줄에 문자열 S가 주어진다. S는 알파벳 소문자로만 이루어져 있고, 길이는 1,000보다 작거나 같다.
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		int num = Integer.parseInt(br.readLine());
-		int high = 0;
-		int number = 0;
-		StringBuilder sb = new StringBuilder();
-		for(int i = 0; i< num; i++) {
-			StringTokenizer st = new StringTokenizer(br.readLine());
-			int h = Integer.parseInt(st.nextToken());
-			int n = Integer.parseInt(st.nextToken());
-			int one = Integer.parseInt(st.nextToken());
-			
 		
-		
-		if(one % h == 0) {
-			sb.append((h*100)+(one/h)).append('\n');
-		}else {
-			sb.append(((one % h)*100)+((one/h)+1)).append('\n');
-			
-		}
-		}//for
-		System.out.println(sb);
+		StringTokenizer word = new StringTokenizer(br.readLine());
+	
+	
+	
+	
+	
 	}
 
 }
