@@ -354,23 +354,46 @@ public class codingtest1 {
 //
 //		입력
 //		첫째 줄에 문자열 S가 주어진다. S는 알파벳 소문자로만 이루어져 있고, 길이는 1,000보다 작거나 같다.
+//		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+//		
+//		String s = br.readLine();
+//		
+//		List<String> list = new ArrayList<>();
+//		
+//		for(int i=0; i< s.length(); i++) {
+//			list.add(s.substring(i));
+//		}
+//		
+//		Collections.sort(list);
+//		
+//		for(int i=0; i< list.size(); i++) {
+//			System.out.println(list.get(i));
+//		}
+
+			
+		
+		//1,3,4개 가져갈 수 있다.
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		
-		String s = br.readLine();
+		int num = Integer.parseInt(br.readLine());
+		int answer = 0;
+		int[] dp = new int[num+1];
+		dp[1] = 1;
+		dp[2] = 0;
+		dp[3] = 1;
+		dp[4] = 1;
 		
-		List<String> list = new ArrayList<>();
-		
-		for(int i=0; i< s.length(); i++) {
-			list.add(s.substring(i));
+		for(int i=5; i< num+1; i++) {
+			if (dp[i-1] + dp[i-3] + dp[i-4] < 3) {
+				dp[i] = 1;
+			}else {
+				dp[i] = 0;
+			}
 		}
-		
-		Collections.sort(list);
-		
-		for(int i=0; i< list.size(); i++) {
-			System.out.println(list.get(i));
+		if(dp[num] == 1) {
+			System.out.println("SK");
+		}else {
+			System.out.println("CY");
 		}
-
-	
 	}
-
 }
