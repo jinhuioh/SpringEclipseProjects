@@ -373,27 +373,50 @@ public class codingtest1 {
 			
 		
 		//1,3,4개 가져갈 수 있다.
+//		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+//		
+//		int num = Integer.parseInt(br.readLine());
+//		int answer = 0;
+//		int[] dp = new int[num+1];
+//		dp[1] = 1;
+//		dp[2] = 0;
+//		dp[3] = 1;
+//		dp[4] = 1;
+//		
+//		for(int i=5; i< num+1; i++) {
+//			if (dp[i-1] + dp[i-3] + dp[i-4] < 3) {
+//				dp[i] = 1;
+//			}else {
+//				dp[i] = 0;
+//			}
+//		}
+//		if(dp[num] == 1) {
+//			System.out.println("SK");
+//		}else {
+//			System.out.println("CY");
+//		}
+		
+		
+		
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		
-		int num = Integer.parseInt(br.readLine());
+//		
+		long num = Integer.parseInt(br.readLine());
 		int answer = 0;
-		int[] dp = new int[num+1];
-		dp[1] = 1;
-		dp[2] = 0;
-		dp[3] = 1;
-		dp[4] = 1;
-		
-		for(int i=5; i< num+1; i++) {
-			if (dp[i-1] + dp[i-3] + dp[i-4] < 3) {
-				dp[i] = 1;
-			}else {
-				dp[i] = 0;
+		int i = 1;
+		int count = 0;
+		while(true) {
+			if(answer > num) {
+				break;
 			}
-		}
-		if(dp[num] == 1) {
-			System.out.println("SK");
-		}else {
-			System.out.println("CY");
-		}
+			
+			answer += i;
+			i++;
+			count++;
+//			System.out.println(answer);
+		}//while
+		System.out.println(count-1);
+		
+		
+		
 	}
 }
