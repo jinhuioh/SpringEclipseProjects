@@ -5,25 +5,21 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class codingtest2 {
+	
+	static int solve(long n) {
+	    long sum = 0;
+	    int addNum = 0;
+	    while(n >= sum) {
+	        sum += (++addNum);
+	    }
 
-	public static void main(String[] args) throws NumberFormatException, IOException {
-
+	    return sum == n ? addNum : addNum - 1;
+	}
+	
+	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-//		
-		long num = Long.parseLong(br.readLine());
-		int answer = 0;
-		int i = 1;
-		int count = 0;
-		while(true) {
-			if(answer > num) {
-				break;
-			}
-			
-			answer += i;
-			i++;
-			count++;
-		}//while
-		System.out.println(count-1);
-		
+		long n = Long.parseLong(br.readLine());
+
+	    System.out.println(solve(n));
 	}
 }
