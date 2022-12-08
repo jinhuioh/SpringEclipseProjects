@@ -2,6 +2,7 @@ package codingtest;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.Arrays;
 import java.io.IOException;
 //
 public class codingtest2 {
@@ -24,80 +25,35 @@ public class codingtest2 {
  
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		
-		int N = Integer.parseInt(br.readLine());
-		
-		// 입력값의 범위 : -4000 ~ 4000
-		int[] arr = new int[8001];
-		
-		/*
-		 *  sum = 총 합계 
-		 *  max = 최댓값
-		 *  min = 최솟값 
-		 *  median = 중앙값
-		 *  mode = 최빈값 
-		 */
+		String nstr = br.readLine();
 		int sum = 0;
-		int max = Integer.MIN_VALUE;
-		int min = Integer.MAX_VALUE;
-		// median 과 mode 는 -4000~4000 을 제외한 수로 초기화하면 된다.
-		int median = 10000;
-		int mode = 10000;
+
+//		해당 숫자 재배치 시작
+		char[] charArr = nstr.toCharArray();
+		Arrays.sort(charArr);//오름차순 정렬
+		int len = charArr.length;
 		
-		for(int i = 0; i < N; i++) {
-			int value = Integer.parseInt(br.readLine());
-			sum += value;
-			arr[value + 4000]++;
+		StringBuilder sb = new StringBuilder();
 		
-			if(max < value) {
-				max = value;
-			}
-			if(min > value) {
-				min = value;
-			}
-		}
-		
-		
-		// 순회 
-		int count = 0;	// 중앙값 빈도 누적 수 
-		int mode_max = 0; 	// 최빈값의 최댓값  
-		
-		// 이전의 동일한 최빈값이 1번만 등장했을경우 true, 아닐경우 false
-		boolean flag = false;	 
-		
-		for(int i = min + 4000; i <= max + 4000; i++) {
+//		오름차순 정렬이므로, 맨 끝 원소부터 반대로 탐색
+		for(int i= len-1; i>= 0; i--) {
+			int num = charArr[i] - '0';
+//			각 자리수를 더했을 때 3의 배수이면 해당 숫자가 3의 배수이므로 sum변수에 각 자리수의 합을 담음
+			sum +=num;
+//			StringBuilder로 스트링 값 한개씩 붙임
+			sb.append(num);
 			
-			if(arr[i] > 0) {
-				
-				/*
-				 * <중앙값 찾기>
-				 * 누적횟수가 전체 전체 길이의 절반에 못 미친다면 
-				 */
-				if(count < (N + 1) / 2) {
-					count += arr[i];	// i값의 빈도수를 count 에 누적
-					median = i - 4000;
-				}
-				
-				/*
-				 * <최빈값 찾기>
-				 * 이전 최빈값보다 현재 값의 빈도수가 더 높을 경우 
-				 */
-				if(mode_max < arr[i]) {
-					mode_max = arr[i];
-					mode = i - 4000;
-					flag = true;	// 첫 등장이므로 true 로 변경 
-				}
-				// 이전 최빈값 최댓값과 동일한 경우면서 한 번만 중복되는 경우 
-				else if(mode_max == arr[i] && flag == true) {
-					mode = i - 4000;
-					flag = false;					
-				}
-			}
 		}
 		
-		System.out.println((int)Math.round((double)sum / N));	// 산술평균 
-		System.out.println(median);	// 중앙값 
-		System.out.println(mode);	// 최빈값 
-		System.out.println(max - min);	// 범위 
+//		30의 배수인지 판단하기 위한 조건 생성
+		
+		if(charArr[0] != '0' || sum % 3 != 0) {//만약 3의 배수가 아니라면
+//			-1을 출력
+			System.out.println(-1);
+			return;
+		}
+		
+		System.out.println(sb.toString());
 	}
  
 }
