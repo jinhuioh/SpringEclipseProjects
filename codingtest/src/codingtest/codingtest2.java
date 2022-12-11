@@ -1,5 +1,6 @@
 package codingtest;
 
+import java.awt.List;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -34,16 +35,36 @@ public class codingtest2 {
 
 		
 //		돌 게임 2
+//		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+//		
+//		int num = Integer.parseInt(br.readLine());
+//		if(num %2 ==1) {
+//			System.out.println("CY");
+//		}
+//		else {
+//			System.out.println("SK");
+			
+//		이친수
+//		이친수는 0으로 시작하지 않는다.
+//		이친수에서는 1이 두 번 연속으로 나타나지 않는다. 즉, 11을 부분 문자열로 갖지 않는다.
+		
+//		n이 주어졌을 때 n자리 이친수의 개수를 구해보자. n의 범위는 1부터90
+		
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		
-		int num = Integer.parseInt(br.readLine());
-		if(num %2 ==1) {
-			System.out.println("CY");
+		int n = Integer.parseInt(br.readLine());
+		
+//		dp로 풀어보자 // long으로 해야 함! int로 하면 21억 자리수가 넘어가서 오류가난다. 
+		long[] dp = new long[91];
+		dp[0] = 0;
+		dp[1] = 1;
+		dp[2] = 1;
+		
+		for(int i=0; i<n-2; i++) {
+			dp[i+3] = dp[i+1] + dp[i+2];
 		}
-		else {
-			System.out.println("SK");
-			
-		}
+		
+		System.out.println(dp[n]);
 	}
  
 }
