@@ -50,21 +50,60 @@ public class codingtest2 {
 		
 //		n이 주어졌을 때 n자리 이친수의 개수를 구해보자. n의 범위는 1부터90
 		
+//		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+//		
+//		int n = Integer.parseInt(br.readLine());
+//		
+////		dp로 풀어보자 // long으로 해야 함! int로 하면 21억 자리수가 넘어가서 오류가난다. 
+//		long[] dp = new long[91];
+//		dp[0] = 0;
+//		dp[1] = 1;
+//		dp[2] = 1;
+//		
+//		for(int i=0; i<n-2; i++) {
+//			dp[i+3] = dp[i+1] + dp[i+2];
+//		}
+//		
+//		System.out.println(dp[n]);
+//		
+		
+//		악수
+//		마지막 자리만 출력
+//		dp로 풀어보자
+		
+//		연습용
+//		int [] dp = new int[3];
+//		dp[0] = 10022;
+//		dp[1] = 20000;
+//		dp[2] = 20000;
+//		if(dp[2]>10000) {
+//			String dpWord = Integer.toString(dp[2]);
+//			System.out.println(dpWord);
+//			int chardp = (dpWord.charAt(dpWord.length()-1)-'0');
+//			System.out.println(chardp);
+//		}
+		
+		
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		
-		int n = Integer.parseInt(br.readLine());
+		int num = Integer.parseInt(br.readLine());
 		
-//		dp로 풀어보자 // long으로 해야 함! int로 하면 21억 자리수가 넘어가서 오류가난다. 
-		long[] dp = new long[91];
-		dp[0] = 0;
-		dp[1] = 1;
-		dp[2] = 1;
-		
-		for(int i=0; i<n-2; i++) {
-			dp[i+3] = dp[i+1] + dp[i+2];
+//		리스트생성
+		int [] dp = new int[10000001];
+		dp[1] = 0;
+		dp[2] = 2;
+		dp[3] = 3;
+		for(int i=0; i<num-3; i++) {
+			dp[i+4] = dp[i+3] + dp[i+2];
+			if(dp[i+4]>10000) {
+				String dpWord = Integer.toString(dp[i+4]);
+				int chardp = (dpWord.charAt(dpWord.length()-1)-'0');
+				dp[i+4] = chardp;
+			}
 		}
-		
-		System.out.println(dp[n]);
+		String dpAnswer = Integer.toString(dp[num]);
+		int answer = (dpAnswer.charAt(dpAnswer.length()-1)-'0');
+		System.out.println(answer);
 	}
  
 }
