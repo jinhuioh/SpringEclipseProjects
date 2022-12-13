@@ -84,26 +84,47 @@ public class codingtest2 {
 //		}
 		
 		
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		
-		int num = Integer.parseInt(br.readLine());
-		
-//		리스트생성
-		int [] dp = new int[10000001];
-		dp[1] = 0;
-		dp[2] = 2;
-		dp[3] = 3;
-		for(int i=0; i<num-3; i++) {
-			dp[i+4] = dp[i+3] + dp[i+2];
-			if(dp[i+4]>10000) {
-				String dpWord = Integer.toString(dp[i+4]);
-				int chardp = (dpWord.charAt(dpWord.length()-1)-'0');
-				dp[i+4] = chardp;
-			}
-		}
-		String dpAnswer = Integer.toString(dp[num]);
-		int answer = (dpAnswer.charAt(dpAnswer.length()-1)-'0');
-		System.out.println(answer);
-	}
+//		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+//		
+//		int num = Integer.parseInt(br.readLine());
+//		
+////		리스트생성
+//		int [] dp = new int[10000001];
+//		dp[1] = 0;
+//		dp[2] = 2;
+//		dp[3] = 3;
+//		for(int i=0; i<num-3; i++) {
+//			dp[i+4] = dp[i+3] + dp[i+2];
+//			if(dp[i+4]>10000) {
+//				String dpWord = Integer.toString(dp[i+4]);
+//				int chardp = (dpWord.charAt(dpWord.length()-1)-'0');
+//				dp[i+4] = chardp;
+//			}
+//		}
+//		String dpAnswer = Integer.toString(dp[num]);
+//		int answer = (dpAnswer.charAt(dpAnswer.length()-1)-'0');
+//		System.out.println(answer);
  
+	
+//	피보나치는 지겨웡~
+	BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+	int n = Integer.parseInt(br.readLine());
+
+	//	dp로 풀어보자!
+	//	정답을 1,000,000,007로 나눈 나머지 출력
+	int[] dp = new int[51];
+	
+	dp[0] = 1;
+	dp[1] = 1;
+	for(int i=0; i<n-1; i++) {
+		dp[i+2] = dp[i] + dp[i+1] + 1;
+		// 숫자가 너무 커지면 연산 오류가 나므로 미리 나눠서 나머지끼리 연산해준다.	
+		if(dp[i+2] >= 1000000007) {
+			dp[i+2] = dp[i+2] % 1000000007;
+		}
+	}
+	System.out.println(dp[n]);
+	
+	
+	}
 }
