@@ -4,6 +4,7 @@ import java.awt.List;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.StringTokenizer;
 //
 public class codingtest2 {
 	public static void main(String[] args) throws IOException {
@@ -107,24 +108,50 @@ public class codingtest2 {
  
 	
 //	피보나치는 지겨웡~
+//	BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+//	int n = Integer.parseInt(br.readLine());
+//
+//	//	dp로 풀어보자!
+//	//	정답을 1,000,000,007로 나눈 나머지 출력
+//	int[] dp = new int[51];
+//	
+//	dp[0] = 1;
+//	dp[1] = 1;
+//	for(int i=0; i<n-1; i++) {
+//		dp[i+2] = dp[i] + dp[i+1] + 1;
+//		// 숫자가 너무 커지면 연산 오류가 나므로 미리 나눠서 나머지끼리 연산해준다.	
+//		if(dp[i+2] >= 1000000007) {
+//			dp[i+2] = dp[i+2] % 1000000007;
+//		}
+//	}
+//	System.out.println(dp[n]);
+	
+//	병든 나이트
+		
+//	세로가로입력받기
+		
 	BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-	int n = Integer.parseInt(br.readLine());
-
-	//	dp로 풀어보자!
-	//	정답을 1,000,000,007로 나눈 나머지 출력
-	int[] dp = new int[51];
 	
-	dp[0] = 1;
-	dp[1] = 1;
-	for(int i=0; i<n-1; i++) {
-		dp[i+2] = dp[i] + dp[i+1] + 1;
-		// 숫자가 너무 커지면 연산 오류가 나므로 미리 나눠서 나머지끼리 연산해준다.	
-		if(dp[i+2] >= 1000000007) {
-			dp[i+2] = dp[i+2] % 1000000007;
-		}
+	StringTokenizer st = new StringTokenizer(br.readLine());
+	int n = Integer.parseInt(st.nextToken()); //세로
+	int m = Integer.parseInt(st.nextToken()); //가로
+	
+	if(n == 1) {
+		System.out.println(1);
 	}
-	System.out.println(dp[n]);
 	
+	else if(n == 2) {
+		int a = ((m+1)/2 < 4) ? (m+1)/2 : 4;
+		System.out.println(a);
+	}
+	else if(m < 7) {
+		int a = (m < 4) ? m : 4;
+		System.out.println(a);
+		
+	}
+	else {
+		System.out.println(m-2);
+	}//else
 	
 	}
 }
