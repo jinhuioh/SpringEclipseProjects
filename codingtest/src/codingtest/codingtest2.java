@@ -1,9 +1,13 @@
 package codingtest;
 
-import java.awt.List;
+import java.util.List;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.StringTokenizer;
 //
 public class codingtest2 {
@@ -126,32 +130,74 @@ public class codingtest2 {
 //	}
 //	System.out.println(dp[n]);
 	
-//	병든 나이트
+
+	//뒤집기
+//	BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+//	String s = br.readLine();
+//	
+//	StringTokenizer st1 = new StringTokenizer(s,"0");
+//	StringTokenizer st0 = new StringTokenizer(s,"1");
+//	System.out.println(Math.min(st1.countTokens(), st0.countTokens()));
+	
+
+	//기타줄
+//	BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+//	String[] nums = br.readLine().split(" ");
+//	int jull = Integer.parseInt(nums[0]);
+//	int num = Integer.parseInt(nums[1]);
+//	
+//	//리스트생성
+//	List<Integer> alllist = new ArrayList<Integer>(); 
+//	List<Integer> onelist = new ArrayList<Integer>(); 
+//	
+//	for(int i = 0; i < num; i++) {
+//		String[] price = br.readLine().split(" ");
+//		int all = Integer.parseInt(price[0]);
+//		int one = Integer.parseInt(price[1]);
+//		
+//		alllist.add(all);
+//		onelist.add(one);
+//	}//for
+//	int allMin = Collections.min(alllist);
+//	int oneMin = Collections.min(onelist);
+//	
+//	int answer = 0;
+//	
+//	//만약 줄의개수가 6의 배수면 (jull/6)*allMin + (jull%6)*oneMin 에서 나머지가 0이므로 연산이 된다.
+//	answer = Math.min(((jull/6)+1)*allMin, (jull/6)*allMin + (jull%6)*oneMin);
+//	answer = Math.min(jull*oneMin, answer);
+//	System.out.println(answer);
 		
-//	세로가로입력받기
 		
+//	수리공 항승
+	
 	BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+	String[] nums = br.readLine().split(" ");
 	
-	StringTokenizer st = new StringTokenizer(br.readLine());
-	int n = Integer.parseInt(st.nextToken()); //세로
-	int m = Integer.parseInt(st.nextToken()); //가로
+	int n = Integer.parseInt(nums[0]);//고장난 파이프 개수
+	int l = Integer.parseInt(nums[1]);//테이프길이
 	
-	if(n == 1) {
-		System.out.println(1);
-	}
+	int answer = 0;
+//	고장난 파이프 입력받기
+	String[] pipes = br.readLine().split(" ");
+	Arrays.sort(pipes);
+//	System.out.println(pipes);
+	float pnum = 0;//테이프
 	
-	else if(n == 2) {
-		int a = ((m+1)/2 < 4) ? (m+1)/2 : 4;
-		System.out.println(a);
-	}
-	else if(m < 7) {
-		int a = (m < 4) ? m : 4;
-		System.out.println(a);
+	for(String p: pipes) {
+		float pint = Integer.parseInt(p);
+		// 테이프를 붙여야하면
+		if(pnum < pint + 0.5) {
+			answer +=1;
+			//pnum갱신
+			
+			pnum = (float) (pint+l-(0.5));
+//			System.out.println("pnum>> "+pnum);
+		}else {
+			continue;
+		}//else
 		
-	}
-	else {
-		System.out.println(m-2);
-	}//else
-	
+	}//for
+	System.out.println(answer);
 	}
 }
