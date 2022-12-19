@@ -257,68 +257,81 @@ public class codingtest2 {
 //		출력
 //		첫 줄에 햄버거를 먹을 수 있는 최대 사람 수를 나타낸다.
 
+//		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+//		
+//		StringTokenizer st = new StringTokenizer(br.readLine());
+//		
+//		//문자열 n입력
+//		int n = Integer.parseInt(st.nextToken());
+//		//k입력
+//		int k = Integer.parseInt(st.nextToken());
+//		
+//		//사람인 경우만 넣는 리스트
+//		Queue<Integer> p_list = new LinkedList<Integer>();
+//		
+//		//햄버거, 사람 배열
+//		char[] arr = new char[n];
+//		
+//		//햄버거와 사람입력
+//		String temp = br.readLine();
+//		
+//		for(int i=0; i<n; i++) {
+//			arr[i] = temp.charAt(i);
+//			//사람인 경우 add
+//			if(arr[i] =='P'){
+//				p_list.add(i);
+//			}
+//		}//for
+//		
+//		//정답 변수
+//		int answer = 0;
+//		
+//		boolean already = false;
+//
+////		poll로 queue에 있는 p를 하나씩 꺼내서 하나도 없으면 while문 멈춤
+//		while(!p_list.isEmpty()) {
+//			//poll : 해당 큐의 맨 앞에 있는(제일 먼저 저장된) 요소를 반환하고, 해당 요소를 큐에서 제거
+//			int t = p_list.poll();
+//			
+//			//사람을 기준으로 왼쪽에 있는 햄버거를 찾는다.
+//			for(int i=k; i>0; i--) {
+//				if(t-i>=0 && arr[t-i]=='H'){//음수 인덱스를 제외. 
+//					//햄버거를 선택한 경우 값을 바꿔준다.
+//					arr[t-i]='P';
+//					answer ++;
+//					already=true;
+//					break;
+//				}//if
+//			}//for
+//			
+//			//이미 true이면 break. 즉 왼쪽 햄버거를 선택한 경우 break;해준다.
+//			for(int i=1; i<=k; i++) {
+//				if(already) break;
+//				
+//				if(t+i<n && arr[t+i]=='H') {
+//					arr[t+i]='P';
+//					answer++;
+//					break;
+//				}//if
+//			}//for
+//			//다음 p계산을 위해 값 false로 갱신
+//			already = false;
+//			
+//		}
+//		System.out.println(answer);
+		
+		//카드 문자열
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		
-		StringTokenizer st = new StringTokenizer(br.readLine());
+		int n = Integer.parseInt(br.readLine());
 		
-		//문자열 n입력
-		int n = Integer.parseInt(st.nextToken());
-		//k입력
-		int k = Integer.parseInt(st.nextToken());
+		for(int i = 0; i < n; i++) {
+			int num = Integer.parseInt(br.readLine());
+			String words = br.readLine();
 		
-		//사람인 경우만 넣는 리스트
-		Queue<Integer> p_list = new LinkedList<Integer>();
-		
-		//햄버거, 사람 배열
-		char[] arr = new char[n];
-		
-		//햄버거와 사람입력
-		String temp = br.readLine();
-		
-		for(int i=0; i<n; i++) {
-			arr[i] = temp.charAt(i);
-			//사람인 경우 add
-			if(arr[i] =='P'){
-				p_list.add(i);
-			}
-		}//for
-		
-		//정답 변수
-		int answer = 0;
-		
-		boolean already = false;
-//		poll로 queue에 있는 p를 하나씩 꺼내서 하나도 없으면 while문 멈춤
-		while(!p_list.isEmpty()) {
-			//poll : 해당 큐의 맨 앞에 있는(제일 먼저 저장된) 요소를 반환하고, 해당 요소를 큐에서 제거
-			int t = p_list.poll();
-			
-			//사람을 기준으로 왼쪽에 있는 햄버거를 찾는다.
-			for(int i=k; i>0; i--) {
-				if(t-i>=0 && arr[t-i]=='H'){//음수 인덱스를 제외. 
-					//햄버거를 선택한 경우 값을 바꿔준다.
-					arr[t-i]='P';
-					answer ++;
-					already=true;
-					break;
-				}//if
-			}//for
-			
-			//이미 true이면 break. 즉 왼쪽 햄버거를 선택한 경우 break;해준다.
-			for(int i=1; i<=k; i++) {
-				if(already) break;
-				
-				if(t+i<n && arr[t+i]=='H') {
-					arr[t+i]='P';
-					answer++;
-					break;
-				}//if
-			}//for
-			//다음 p계산을 위해 값 false로 갱신
-			already = false;
-			
+			System.out.println(words);
 		}
-		System.out.println(answer);
-		
+	
 	}
 
 }
