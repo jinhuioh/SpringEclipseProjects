@@ -6,6 +6,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.reflect.Array;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -13,6 +14,7 @@ import java.util.LinkedList;
 import java.util.StringTokenizer;
 
 import javax.management.Query;
+import javax.swing.JPopupMenu.Separator;
 //
 public class codingtest2 {
 	public static void main(String[] args) throws IOException {
@@ -327,10 +329,31 @@ public class codingtest2 {
 		
 		for(int i = 0; i < n; i++) {
 			int num = Integer.parseInt(br.readLine());
-			String words = br.readLine();
+			StringTokenizer st = new StringTokenizer(br.readLine());
+			LinkedList words = new LinkedList();
+			//문자 하나를 꺼내서 큐에 넣음
+			words.add(st.nextToken());
+			
+			//문자 개수만큼 for문 돌림
+			for(int j=0; j<num-1; j++) {
+				//문자 하나 꺼내서 이전 문자와 크기 비교
+				String s = st.nextToken();
+				//큐의 맨 앞 값과 비교했을 때 s가 더 크면 큐 뒤에 붙임(add사용하면 뒤에 붙여짐)
+				if(((String) words.get(0)).compareTo(s)<0) {
+					words.addLast(s);
+				}
+				//s가 더 작으면 앞에 붙여준다.
+				else {
+					words.addFirst(s);
+				}
+			}//for
+			
+			//정답 프린트
+			for(int k=0; k<words.size(); k++) {
+				System.out.print(words.get(k));
+			}
 		
-			System.out.println(words);
-		}
+		}//for
 	
 	}
 
