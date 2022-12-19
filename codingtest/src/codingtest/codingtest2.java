@@ -1,6 +1,7 @@
 package codingtest;
 
 import java.util.List;
+import java.util.Queue;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -8,7 +9,10 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.StringTokenizer;
+
+import javax.management.Query;
 //
 public class codingtest2 {
 	public static void main(String[] args) throws IOException {
@@ -219,33 +223,102 @@ public class codingtest2 {
 //		출력
 //		첫째 줄에 불만도의 합을 최소로 할 때, 그 불만도를 출력한다.
 		
+//		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+//		
+//		int n = Integer.parseInt(br.readLine());
+//		
+//		//예상등수를 넣을 리스트
+//		List<Integer> nums = new ArrayList<Integer>();
+//		
+//		for (int i=0; i<n; i++) {
+//			//예상등수 입력받기
+//			int one = Integer.parseInt(br.readLine());
+//			//예상등수 add
+//			nums.add(one);
+//		}//for
+//		
+//		//sort
+//		Collections.sort(nums);
+//		
+//		//불만도의 합 구하기
+//		long answer = 0;
+//		for(int j=1; j<=n; j++) {
+//			int num = nums.get(j-1);
+//			answer += Math.abs(num-j);
+//		}
+//		System.out.println(answer);
+//	
+
+		
+		//햄버거 분배
+//		입력
+//		첫 줄에 두 정수 $N$과 $K$가 있다. 그리고 다음 줄에 사람과 햄버거의 위치가 문자 P(사람)와 H(햄버거)로 이루어지는 길이 $N$인 문자열로 주어진다.
+//
+//		출력
+//		첫 줄에 햄버거를 먹을 수 있는 최대 사람 수를 나타낸다.
+
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		
-		int n = Integer.parseInt(br.readLine());
+		StringTokenizer st = new StringTokenizer(br.readLine());
 		
-		//예상등수를 넣을 리스트
-		List<Integer> nums = new ArrayList<Integer>();
+		//문자열 n입력
+		int n = Integer.parseInt(st.nextToken());
+		//k입력
+		int k = Integer.parseInt(st.nextToken());
 		
-		for (int i=0; i<n; i++) {
-			//예상등수 입력받기
-			int one = Integer.parseInt(br.readLine());
-			//예상등수 add
-			nums.add(one);
+		//사람인 경우만 넣는 리스트
+		Queue<Integer> p_list = new LinkedList<Integer>();
+		
+		//햄버거, 사람 배열
+		char[] arr = new char[n];
+		
+		//햄버거와 사람입력
+		String temp = br.readLine();
+		
+		for(int i=0; i<n; i++) {
+			arr[i] = temp.charAt(i);
+			//사람인 경우 add
+			if(arr[i] =='P'){
+				p_list.add(i);
+			}
 		}//for
 		
-		//sort
-		Collections.sort(nums);
+		//정답 변수
+		int answer = 0;
 		
-		//불만도의 합 구하기
-		long answer = 0;
-		for(int j=1; j<=n; j++) {
-			int num = nums.get(j-1);
-			answer += Math.abs(num-j);
+		boolean already = false;
+//		poll로 queue에 있는 p를 하나씩 꺼내서 하나도 없으면 while문 멈춤
+		while(!p_list.isEmpty()) {
+			//poll : 해당 큐의 맨 앞에 있는(제일 먼저 저장된) 요소를 반환하고, 해당 요소를 큐에서 제거
+			int t = p_list.poll();
+			
+			//사람을 기준으로 왼쪽에 있는 햄버거를 찾는다.
+			for(int i=k; i>0; i--) {
+				if(t-i>=0 && arr[t-i]=='H'){//음수 인덱스를 제외. 
+					//햄버거를 선택한 경우 값을 바꿔준다.
+					arr[t-i]='P';
+					answer ++;
+					already=true;
+					break;
+				}//if
+			}//for
+			
+			//이미 true이면 break. 즉 왼쪽 햄버거를 선택한 경우 break;해준다.
+			for(int i=1; i<=k; i++) {
+				if(already) break;
+				
+				if(t+i<n && arr[t+i]=='H') {
+					arr[t+i]='P';
+					answer++;
+					break;
+				}//if
+			}//for
+			//다음 p계산을 위해 값 false로 갱신
+			already = false;
+			
 		}
 		System.out.println(answer);
-	
-	
-	
+		
 	}
 
 }
