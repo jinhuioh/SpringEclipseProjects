@@ -15,84 +15,115 @@ import java.util.StringTokenizer;
 
 import javax.management.Query;
 import javax.swing.JPopupMenu.Separator;
+
+//특정 거리의 도시 찾기
+
+//문제
+//어떤 나라에는 1번부터 N번까지의 도시와 M개의 단방향 도로가 존재한다. 모든 도로의 거리는 1이다.
 //
+//이 때 특정한 도시 X로부터 출발하여 도달할 수 있는 모든 도시 중에서, 최단 거리가 정확히 K인 모든 도시들의 번호를 출력하는 프로그램을 작성하시오.
+//또한 출발 도시 X에서 출발 도시 X로 가는 최단 거리는 항상 0이라고 가정한다.
+//
+
+//입력
+//첫째 줄에 도시의 개수 N, 도로의 개수 M, 거리 정보 K, 출발 도시의 번호 X가 주어진다. 
+//(2 ≤ N ≤ 300,000, 1 ≤ M ≤ 1,000,000, 1 ≤ K ≤ 300,000, 1 ≤ X ≤ N) 둘째 줄부터 M개의 줄에 걸쳐서 두 개의 자연수 A, B가 공백을 기준으로 구분되어 주어진다.
+//
+//출력
+//X로부터 출발하여 도달할 수 있는 도시 중에서, 최단 거리가 K인 모든 도시의 번호를 한 줄에 하나씩 오름차순으로 출력한다.
+//
+//이 때 도달할 수 있는 도시 중에서, 최단 거리가 K인 도시가 하나도 존재하지 않으면 -1을 출력한다.
+
+//예제 입력 1 
+//4 4 2 1
+//1 2
+//1 3
+//2 3
+//2 4
+//예제 출력 1 
+//4
 public class codingtest2 {
+	static int n,m,k,x;
+	static List<ArrayList<Integer>> map;
+	static int[] k_arr;//거리정보를 넣을 배열(시작부터 얼만큼 떨어져있는지)
+	
+	private static int[] bfs(int x, int k) {//거리 정보 K, 출발 도시의 번호 X
+		//	    거리정보를 넣을 배열
+	    	k_arr = new int[n+1];
+		//		   찾던 도시넣을 배열
+		    int[] answer_bfs = new int[n+1];
+		    boolean[] visited = new boolean[n+1];//방문했는지 표시할 변수
+				visited[0] = true;
+				visited[x] = true;
+				Queue<Integer> q = new LinkedList<Integer>();
+				q.add(x);
+				//k_arr초기값
+				k_arr[x] = 0;
+				while (!q.isEmpty()) {
+					int qp = q.poll();
+					for(int qpnum: map.get(qp)) {
+						if(visited[qpnum]) {
+							continue;
+						}
+						k_arr[qpnum] = k_arr[qp]+1;
+						
+						//k거리에 있는 도시이면 배열에 1로 표시!!
+						if(k_arr[qpnum] == k) {
+//							System.out.println("qpnum>  "+qpnum+" k_arr[qpnum]>  "+k_arr[qpnum]);
+							answer_bfs[qpnum]=1;
+						}
+						
+						visited[qpnum] = true;
+						q.add(qpnum);
+					}
+				}//while
+	
+				return answer_bfs;
+	}//private
+	
+	
 	public static void main(String[] args) throws IOException {
 
-   //거리가 k이하인 트리 노드에서 사과 수확하기
       BufferedReader br =  new BufferedReader(new InputStreamReader(System.in));
       StringTokenizer st = new StringTokenizer(br.readLine()," ");
-      int n = Integer.parseInt(st.nextToken());
-      int k = Integer.parseInt(st.nextToken());
+//      도시의 개수 N, 도로의 개수 M, 거리 정보 K, 출발 도시의 번호 X
+      n = Integer.parseInt(st.nextToken());
+      m = Integer.parseInt(st.nextToken());
+      k = Integer.parseInt(st.nextToken());
+      x = Integer.parseInt(st.nextToken());
       
-      List<ArrayList<Integer>> map = new ArrayList<ArrayList<Integer>>();
-      for(int j=0; j<n; j++) {
-         map.add(new ArrayList<Integer>());
+      
+      map = new ArrayList<ArrayList<Integer>>();
+      //해당 도시에 연결된 도시들을 넣을 리스트
+      for(int i=0; i<=n; i++) {
+    	  map.add(new ArrayList<Integer>());
       }
-      for(int i=0; i<n-1; i++) {
-        StringTokenizer st1 = new StringTokenizer(br.readLine()," ");
-         int p1 = Integer.parseInt(st1.nextToken());
-         int p2 = Integer.parseInt(st1.nextToken());
-         map.get(p1).add(p2);//부모에 연결된 자식 넣기
+      
+      for(int i=0; i<m; i++) {
+//    	  A번 도시에서 B번 도시로 이동하는 단방향 도로가 존재한다는 의미.
+    	  StringTokenizer st1 = new StringTokenizer(br.readLine()," ");
+    	  int a = Integer.parseInt(st1.nextToken());
+    	  int b = Integer.parseInt(st1.nextToken());
+    	  map.get(a).add(b);//단방향 add
       }//for
       
-      //사과 개수 입력
-      StringTokenizer st2 = new StringTokenizer(br.readLine()," ");
-      int[] arr = new int[n];
-      for(int i=0; i<n; i++) {
-         arr[i] = Integer.parseInt(st2.nextToken());
-      }//for
-
-      //각 숫자의 트리가 몇번째인지 배열------------------------
-      //방문한거 채크할 배열
-      boolean[] visitedtr = new boolean[n];
-      Queue<Integer> q1 = new LinkedList<Integer>();
-      q1.add(0);
-      //트리 순서 넣기
-      int[] indexarr = new int[n];
-      indexarr[0] = 0;//초기값
-      visitedtr[0] = true;//초기값
+//      System.out.println(map);
      
-      while(!q1.isEmpty()) {
-         int q1poll = q1.poll();
-         visitedtr[q1poll] = true;
-         for(int nums : map.get(q1poll)) {
-        	 //이미true이면 continue
-        	 if(visitedtr[nums]) continue;
-        	 indexarr[nums] = indexarr[q1poll] + 1;
-//        	 System.out.println(nums+"번째 숫자의 트리는"+ (indexarr[q1poll] + 1) +"번째입니다.");
-        	 q1.add(nums);
-         }
-      }//while
-      
-      //방문했는지 채크
-      boolean[] visited = new boolean[n];
-      
-      //0부터 탐색 시작!!!
-      int answer = arr[0];//사과 개수의 초기값 0번째 루트부터 센다.
-      Queue<Integer> q = new LinkedList<Integer>();
-      q.add(0);
-      visited[0] = true;
-      
-      //트리가k이하인 숫자만 while문 돌림
-      while(!q.isEmpty()) {
-         
-         int qpoll = q.poll();
-         visited[qpoll] = true;
-         for(int num: map.get(qpoll)) {//현재 위치에 담긴 숫자들
-            if(visited[num] || indexarr[num]>k) {//이미 방문했거나 트리위치가 k번보다 먼 경우 패스
-               continue;
-            }
-            //사과 개수 세기
-            answer += arr[num];
-            visited[num] = true;
-//            System.out.println("num>> "+num);
-//            System.out.println("answer>> "+answer);
-            q.add(num);
-         }//for
+   
+    int[] answer =  bfs(x, k);//return answer_bfs값을 answer변수에 넣어준다.
+    
+      int count = 0;
+      //최단거리가 k인 도시 찾기 출발 도시 x
+      for(int i=1; i<answer.length; i++) {
+    	  if(answer[i]==1) {
+    		  count=1;
+    		  System.out.println(i);
+    	  }
       }//for
-      System.out.println(answer);
-   }
+      if(count==0) {
+    	  System.out.println(-1);
+      }
+	}
 
 }
    
