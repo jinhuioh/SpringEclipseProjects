@@ -15,114 +15,91 @@ import java.util.StringTokenizer;
 
 import javax.management.Query;
 import javax.swing.JPopupMenu.Separator;
-
-//특정 거리의 도시 찾기
-
-//문제
-//어떤 나라에는 1번부터 N번까지의 도시와 M개의 단방향 도로가 존재한다. 모든 도로의 거리는 1이다.
-//
-//이 때 특정한 도시 X로부터 출발하여 도달할 수 있는 모든 도시 중에서, 최단 거리가 정확히 K인 모든 도시들의 번호를 출력하는 프로그램을 작성하시오.
-//또한 출발 도시 X에서 출발 도시 X로 가는 최단 거리는 항상 0이라고 가정한다.
-//
-
-//입력
-//첫째 줄에 도시의 개수 N, 도로의 개수 M, 거리 정보 K, 출발 도시의 번호 X가 주어진다. 
-//(2 ≤ N ≤ 300,000, 1 ≤ M ≤ 1,000,000, 1 ≤ K ≤ 300,000, 1 ≤ X ≤ N) 둘째 줄부터 M개의 줄에 걸쳐서 두 개의 자연수 A, B가 공백을 기준으로 구분되어 주어진다.
-//
-//출력
-//X로부터 출발하여 도달할 수 있는 도시 중에서, 최단 거리가 K인 모든 도시의 번호를 한 줄에 하나씩 오름차순으로 출력한다.
-//
-//이 때 도달할 수 있는 도시 중에서, 최단 거리가 K인 도시가 하나도 존재하지 않으면 -1을 출력한다.
-
-//예제 입력 1 
-//4 4 2 1
-//1 2
-//1 3
-//2 3
-//2 4
-//예제 출력 1 
-//4
 public class codingtest2 {
-	static int n,m,k,x;
-	static List<ArrayList<Integer>> map;
-	static int[] k_arr;//거리정보를 넣을 배열(시작부터 얼만큼 떨어져있는지)
+//	문제
+//	체스판 위에 한 나이트가 놓여져 있다. 나이트가 한 번에 이동할 수 있는 칸은 아래 그림에 나와있다. 나이트가 이동하려고 하는 칸이 주어진다. 나이트는 몇 번 움직이면 이 칸으로 이동할 수 있을까?
+//	입력
+//	입력의 첫째 줄에는 테스트 케이스의 개수가 주어진다.
+//
+//	각 테스트 케이스는 세 줄로 이루어져 있다. 첫째 줄에는 체스판의 한 변의 길이 l(4 ≤ l ≤ 300)이 주어진다. 체스판의 크기는 l × l이다. 체스판의 각 칸은 두 수의 쌍 {0, ..., l-1} × {0, ..., l-1}로 나타낼 수 있다. 둘째 줄과 셋째 줄에는 나이트가 현재 있는 칸, 나이트가 이동하려고 하는 칸이 주어진다.
+//
+//	출력
+//	각 테스트 케이스마다 나이트가 최소 몇 번만에 이동할 수 있는지 출력한다.
+//
+//	예제 입력 1 
+//	3
+//	8
+//	0 0
+//	7 0
+//	100
+//	0 0
+//	30 50
+//	10
+//	1 1
+//	1 1
+//	예제 출력 1 
+//	5
+//	28
+//	0
+	static int n,m;
+	static int[][] map;
+	static boolean[][] visited;
+	static int[] answer_arr;//정답 넣을 배열
+	static int[] dx = {2,2,-2,-2,1,1,-1,-1};//채스판 이동
+	static int[] dy = {1,-1,1,-1,2,-2,2,-2};
 	
-	private static int[] bfs(int x, int k) {//거리 정보 K, 출발 도시의 번호 X
-		//	    거리정보를 넣을 배열
-	    	k_arr = new int[n+1];
-		//		   찾던 도시넣을 배열
-		    int[] answer_bfs = new int[n+1];
-		    boolean[] visited = new boolean[n+1];//방문했는지 표시할 변수
-				visited[0] = true;
-				visited[x] = true;
-				Queue<Integer> q = new LinkedList<Integer>();
-				q.add(x);
-				//k_arr초기값
-				k_arr[x] = 0;
-				while (!q.isEmpty()) {
-					int qp = q.poll();
-					for(int qpnum: map.get(qp)) {
-						if(visited[qpnum]) {
-							continue;
-						}
-						k_arr[qpnum] = k_arr[qp]+1;
-						
-						//k거리에 있는 도시이면 배열에 1로 표시!!
-						if(k_arr[qpnum] == k) {
-//							System.out.println("qpnum>  "+qpnum+" k_arr[qpnum]>  "+k_arr[qpnum]);
-							answer_bfs[qpnum]=1;
-						}
-						
-						visited[qpnum] = true;
-						q.add(qpnum);
-					}
-				}//while
-	
-				return answer_bfs;
-	}//private
-	
+	private static int bfs(int s1, int s2, int e1, int e2) {
+		Queue<int[]> q = new LinkedList<int[]>();
+		//시작점 넣기
+		q.add(new int[] {s1,s2});
+		visited[s1][s2] = true;
+		while (!q.isEmpty()) {
+			int y = q.peek()[0];
+			int x = q.peek()[1];
+			q.poll();
+			for(int i = 0; i < 8; i++) {
+				int ny = y + dy[i];
+				int nx = x + dx[i];
+				
+				//범위가 넘어가면 continue
+				if(ny<0 || ny>=m || nx<0 || nx>=m) continue;
+				//이미 방문했으면 continue
+				if(visited[ny][nx]) continue;
+				//위치 값 증가
+				map[ny][nx] = map[y][x] + 1;
+				//q.add
+				q.add(new int[] {ny, nx});
+				visited[ny][nx] = true;
+			}//for
+		}//while
+		return map[e1][e2];
+	}
 	
 	public static void main(String[] args) throws IOException {
-
       BufferedReader br =  new BufferedReader(new InputStreamReader(System.in));
-      StringTokenizer st = new StringTokenizer(br.readLine()," ");
-//      도시의 개수 N, 도로의 개수 M, 거리 정보 K, 출발 도시의 번호 X
-      n = Integer.parseInt(st.nextToken());
-      m = Integer.parseInt(st.nextToken());
-      k = Integer.parseInt(st.nextToken());
-      x = Integer.parseInt(st.nextToken());
-      
-      
-      map = new ArrayList<ArrayList<Integer>>();
-      //해당 도시에 연결된 도시들을 넣을 리스트
-      for(int i=0; i<=n; i++) {
-    	  map.add(new ArrayList<Integer>());
-      }
-      
-      for(int i=0; i<m; i++) {
-//    	  A번 도시에서 B번 도시로 이동하는 단방향 도로가 존재한다는 의미.
+      n = Integer.parseInt(br.readLine());
+      answer_arr = new int[n];
+      for(int i = 0; i<n; i++) {
+    	  m = Integer.parseInt(br.readLine());
+    	  map = new int[m][m];
+    	  visited = new boolean[m][m];
+    	  StringTokenizer st = new StringTokenizer(br.readLine()," ");
+    	  //시작점
+    	  int s1 = Integer.parseInt(st.nextToken());
+    	  int s2 = Integer.parseInt(st.nextToken());
     	  StringTokenizer st1 = new StringTokenizer(br.readLine()," ");
-    	  int a = Integer.parseInt(st1.nextToken());
-    	  int b = Integer.parseInt(st1.nextToken());
-    	  map.get(a).add(b);//단방향 add
+    	  //끝점
+    	  int e1 = Integer.parseInt(st1.nextToken());
+    	  int e2 = Integer.parseInt(st1.nextToken());
+    	  //시작점 끝 점 넣기.
+    	  int answer = bfs(s1, s2, e1, e2);
+    	  answer_arr[i] = answer;
+//    	  System.out.println(i+" "+answer);
       }//for
-      
-//      System.out.println(map);
-     
-   
-    int[] answer =  bfs(x, k);//return answer_bfs값을 answer변수에 넣어준다.
-    
-      int count = 0;
-      //최단거리가 k인 도시 찾기 출발 도시 x
-      for(int i=1; i<answer.length; i++) {
-    	  if(answer[i]==1) {
-    		  count=1;
-    		  System.out.println(i);
-    	  }
+//      System.out.println("n>>"+n);
+      for(int k = 0; k<n; k++) {
+    	  System.out.println(answer_arr[k]);
       }//for
-      if(count==0) {
-    	  System.out.println(-1);
-      }
 	}
 
 }
