@@ -83,7 +83,7 @@ public class codingTest3 {
 			String s = br.readLine();
 			for(int j = 0; j < n; j++) {
 				map[i][j] =  s.charAt(j)-'0';
-//				System.out.println("map[i][j]>> "+map[i][j]);
+				System.out.println("map[i][j]>> "+map[i][j]);
 				
 			}//for
 		}//for
