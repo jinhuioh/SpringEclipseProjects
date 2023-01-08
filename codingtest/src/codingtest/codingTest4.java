@@ -80,7 +80,7 @@ public class codingTest4 {
 				map[i][j] = Integer.parseInt(st.nextToken()); 
 			}
 		}//for
-		int max_answer = 1;//안전지대의 최대값
+		int max_answer = 1;//안전지대의 최대값 1이 최소이므로 초기값을 1로 잡는다.
 		for(int k = 1; k<100; k++) {//k이하의 숫자는 물에 잠긴다.
 			int answer = bfs_answer(k);
 //			if(answer == 0) {//안잠긴 마을이 하나도 없으면 for문을 멈춘다.

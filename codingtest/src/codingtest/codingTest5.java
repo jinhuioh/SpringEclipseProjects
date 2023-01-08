@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Arrays;
+import java.util.Scanner;
 import java.util.StringTokenizer;
 
 public class codingTest5 {
@@ -27,34 +28,39 @@ public class codingTest5 {
 //	20 30 25
 //	예제 출력 1 
 //	50
+	
+	static final Scanner sc = new Scanner(System.in);
+	static int n; // 사람의 수
+	static int[] health;// 체력 잃는 수
+	static int[] pleasure;// 기쁨 얻는 수
 	public static void main(String[] args) throws NumberFormatException, IOException {
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		int n = Integer.parseInt(br.readLine());
-		StringTokenizer st = new StringTokenizer(br.readLine());
-		StringTokenizer st1 = new StringTokenizer(br.readLine());
-		
-		int k = 99;
-		int[][] dp = new int[n+1][k+1];//[n번째 사람][n번째 사람의 채력을 뺀 남은 생명력] = 기쁨. 인 배열
-		int[] people = new int[n+1];
-		int[] pre = new int[n+1];
-		
-		for(int i = 1; i <= n; i++) {
-			people[i] = Integer.parseInt(st.nextToken());
-			pre[i] = Integer.parseInt(st1.nextToken());
+		n = sc.nextInt();
+		health = new int[n];
+		pleasure = new int[n];
+	
+		for(int i = 0; i<n; i++) {
+			health[i] = sc.nextInt();
 		}//for
-		
-		//초기값
-		 
-		for(int i = 1; i <= n; i++) {
-			for(int j = 1; j <= k; j++) {
-				if(people[i] <= j) {
-					dp[i][j] = Math.max(dp[i-1][j-people[i]]+pre[i], dp[i-1][j]);
-				} else {
-					dp[i][j] = dp[i-1][j];
-				}
-			}//for
+		for(int i = 0; i<n; i++) {
+			pleasure[i] = sc.nextInt();
 		}//for
-		System.out.println(dp[n][k]);
+		System.out.println(go(0,0,0));
+	}
+	
+	//재귀를 이용하여 계속 다음 값과 비교하도록 구현
+	public static int go(int index, int now_life, int sum) {
+		if(now_life >= 100) {
+			return 0;
+		}
+		if(index == n) {
+			return sum;
+		}
+		int answer = 0;
+		
+		answer = Math.max(answer, go(index+1,now_life+health[index], sum+pleasure[index]));//현재 인덱스 위치 값 더한거와 answer의 최대값 고르기
+		
+		answer = Math.max(answer, go(index+1, now_life, sum));//현재 인덱스 위치 값 안더하고 패스한거랑 answer의 최대값
+		return answer;
 	}
 
 }
