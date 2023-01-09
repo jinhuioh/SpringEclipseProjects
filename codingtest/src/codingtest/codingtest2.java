@@ -16,54 +16,45 @@ import java.util.StringTokenizer;
 import javax.management.Query;
 import javax.swing.JPopupMenu.Separator;
 public class codingtest2 {
-//	문제
-//	인류의 차세대 인공지능 자원 캐기 로봇인 WOOK은 인간 대신 자원을 캐는 로봇이다.
-//	WOOK은 언제나 제한된 범위 내에서 자원을 탐색하며, 왼쪽 위 (1, 1)부터 오른쪽 아래 (N, M)까지 자원을 탐색한다. 
-//	WOOK은 한 번에 오른쪽 또는 아래쪽으로 한 칸 이동할 수 있으며, 그 외의 방향으로 움직이는 것은 불가능하다. 
-//	WOOK은 자신이 위치한 (x, y)에 자원이 있는 경우에만 해당 자원을 채취할 수 있다. WOOK이 탐사할 영역에 대한 정보가 주어질 때,
-//	WOOK이 탐색할 수 있는 자원의 최대 숫자를 구해라!
+//	문제: 지구온난화
+//	푸르고 아름다운 남해에는 많은 섬이 장관을 이루고 있다. 그림이 아니면 볼 수 없을 것 같은 아름다운 장관을 실제로 볼 수 있는 다도해로 상근이는 여행을 떠났다.
+//
+//	다도해에 도착한 상근이는 서울에서 보던 것과는 다른 풍경에 큰 충격을 받았다. 지구 온난화로 인해 해수면이 상승해 섬의 일부가 바다에 잠겨버렸다.
+//
+//	서울로 다시 돌아온 상근이는 이렇게 지구 온난화가 계속 될 경우 남해의 지도는 어떻게 바뀔지 궁금해졌다.
+//
+//	다도해의 지도는 R*C 크기의 그리드로 나타낼 수 있다. 'X'는 땅을 나타내고, '.'는 바다를 나타낸다.
+//
+//	50년이 지나면, 인접한 세 칸 또는 네 칸에 바다가 있는 땅은 모두 잠겨버린다는 사실을 알았다.
+//
+//	상근이는 50년 후 지도를 그려보기로 했다. 섬의 개수가 오늘날보다 적어질 것이기 때문에, 지도의 크기도 작아져야 한다. 지도의 크기는 모든 섬을 포함하는 가장 작은 직사각형이다. 50년이 지난 후에도 섬은 적어도 한 개 있다. 또, 지도에 없는 곳, 지도의 범위를 벗어나는 칸은 모두 바다이다.
 //
 //	입력
-//	첫째 줄에 WOOK이 탐사할 영역의 세로길이 N(1≤N≤300)과 가로길이 M(1≤M≤300)이 주어진다. 그 다음 N행 M열에 걸쳐 탐사영역에 대한 정보가 주어진다. 숫자는 공백으로 구분된다. 
-//	(자원은 1, 빈 땅은 0으로 표시된다)
+//	첫째 줄에 지도의 크기 R과 C (1 ≤ R, C ≤ 10)가 주어진다. 다음 R개 줄에는 현재 지도가 주어진다.
 //
 //	출력
-//	WOOK이 수집할 수 있는 최대 광석의 개수를 출력하라.
+//	50년 후의 지도를 출력한다.
 //
 //	예제 입력 1 
-//	5 4
-//	0 1 0 0
-//	0 0 1 0
-//	1 1 0 0
-//	1 0 1 0
-//	1 1 0 0
+//	5 3
+//	...
+//	.X.
+//	.X.
+//	.X.
+//	...
 //	예제 출력 1 
-//	4
+//	X
+//	예제 입력 2 
+//	3 10
+//	..........
+//	..XXX.XXX.
+//	XXX.......
+//	예제 출력 2 
+//	.XX...X
+//	XX.....
 	public static void main(String[] args) throws NumberFormatException, IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer st = new StringTokenizer(br.readLine());
-		int n = Integer.parseInt(st.nextToken());
-		int m = Integer.parseInt(st.nextToken());
-		int[][] map = new int[n+1][m+1];
-
-		//map 입력받기 1,1부터 입력받고 탐색할때 0인덱스 값과 비교 해야하기 때문에(0,0부터 입력받으면 아래 for문 돌때 -1값이 들어감)
-		for(int i = 1; i<=n; i++) {
-			StringTokenizer st1 = new StringTokenizer(br.readLine());
-			for(int j = 1; j<=m; j++) {
-				map[i][j] = Integer.parseInt(st1.nextToken());
-//				System.out.println(map[i][j]);
-			}//for
-		}//for
-
-
-		for(int i = 1; i<=n; i++) {
-			for(int j = 1; j<=m; j++) {
-				map[i][j] = Math.max(map[i-1][j], map[i][j-1]) + map[i][j]; 
-//				System.out.println("i j map "+i+" "+j+" "+map[i][j]);
-			}//for
-		}//for
-		
-		System.out.println(map[n][m]);
 
 	}
 

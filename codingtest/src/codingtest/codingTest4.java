@@ -9,86 +9,88 @@ import java.util.Queue;
 import java.util.StringTokenizer;
 
 public class codingTest4 {
-//문제
-//안전지역
+//음식물 피하기
+//	문제
+//	코레스코 콘도미니엄 8층은 학생들이 3끼의 식사를 해결하는 공간이다. 그러나 몇몇 비양심적인 학생들의 만행으로 음식물이 통로 중간 중간에 떨어져 있다. 이러한 음식물들은 근처에 있는 것끼리 뭉치게 돼서 큰 음식물 쓰레기가 된다. 
+//
+//	이 문제를 출제한 선생님은 개인적으로 이러한 음식물을 실내화에 묻히는 것을 정말 진정으로 싫어한다. 참고로 우리가 구해야 할 답은 이 문제를 낸 조교를 맞추는 것이 아니다. 
+//
+//	통로에 떨어진 음식물을 피해가기란 쉬운 일이 아니다. 따라서 선생님은 떨어진 음식물 중에 제일 큰 음식물만은 피해 가려고 한다. 
+//
+//	선생님을 도와 제일 큰 음식물의 크기를 구해서 “10ra"를 외치지 않게 도와주자.
+//
 //	입력
-//	첫째 줄에는 어떤 지역을 나타내는 2차원 배열의 행과 열의 개수를 나타내는 수 N이 입력된다. N은 2 이상 100 이하의 정수이다. 둘째 줄부터 N개의 각 줄에는 2차원 배열의 첫 번째 행부터 N번째 행까지 순서대로 한 행씩 높이 정보가 입력된다. 각 줄에는 각 행의 첫 번째 열부터 N번째 열까지 N개의 높이 정보를 나타내는 자연수가 빈 칸을 사이에 두고 입력된다. 높이는 1이상 100 이하의 정수이다.
+//	첫째 줄에 통로의 세로 길이 N(1 ≤ N ≤ 100)과 가로 길이 M(1 ≤ M ≤ 100) 그리고 음식물 쓰레기의 개수 K(1 ≤ K ≤ N×M)이 주어진다.  그리고 다음 K개의 줄에 음식물이 떨어진 좌표 (r, c)가 주어진다.
+//
+//	좌표 (r, c)의 r은 위에서부터, c는 왼쪽에서부터가 기준이다. 입력으로 주어지는 좌표는 중복되지 않는다.
 //
 //	출력
-//	첫째 줄에 장마철에 물에 잠기지 않는 안전한 영역의 최대 개수를 출력한다.
+//	첫째 줄에 음식물 중 가장 큰 음식물의 크기를 출력하라.
 //
 //	예제 입력 1 
-//	5
-//	6 8 2 6 2
-//	3 2 3 4 6
-//	6 7 3 3 2
-//	7 2 5 3 6
-//	8 9 5 2 7
+//	3 4 5
+//	3 2
+//	2 2
+//	3 1
+//	2 3
+//	1 1
 //	예제 출력 1 
-//	5
-	
+//	4
 	static int[][] map;
-	static int n,m;
 	static boolean[][] visited;
-	static int[] dx = {0,0,-1,1};
-	static int[] dy = {-1,1,0,0};
+	static int answer;//가장 큰 음쓰 크기가 들어갈 변수
+	static int n,m,k;
+	static int[] dx = {0,0,1,-1};
+	static int[] dy = {1,-1,0,0};
 	
-	private static void bfs(int i, int j, int k) {
-		visited[i][j] = true;//초기값 방문처리
+	private static int bfs(int i, int j) {
 		Queue<int[]> q = new LinkedList<int[]>();
 		q.add(new int[] {i,j});
-		
+		visited[i][j] = true;
+		int count = 1;//음식물 쓰레기 셀 변수
 		while (!q.isEmpty()) {
 			int y = q.peek()[0];
 			int x = q.peek()[1];
 			q.poll();
-			for(int i1 = 0; i1<4; i1++) {
-				int ny = y + dy[i1];
-				int nx = x + dx[i1];
-				if(ny<0 || ny>=n || nx<0 || nx>=n) continue;//범위 벗어나면 패스
-				if(visited[ny][nx] || map[ny][nx] <= k) continue;//이미 방문했거나 k보다 작으면 패스
-				q.add(new int[] {ny,nx});
+			
+			for(int p=0; p<4; p++) {
+				int ny = y + dy[p];
+				int nx = x + dx[p];
+				if(ny<1 || ny>n || nx<1 || nx>m) continue;
+				if(map[ny][nx] !=1 || visited[ny][nx]) continue;
+				
+				q.add(new int[] {ny, nx});
 				visited[ny][nx] = true;
-//				System.out.println("qadd>>> "+ny+" "+nx);
-			}//for
-		}//while
-	}
-	
-	private static int bfs_answer(int k) {
-		//한줄씩 탐색하면서 물에 잠기지 않은 지역의 개수 세기
-		int count = 0;
-		visited = new boolean[n][n];//k가 바뀔때마다 초기화
-		for(int i = 0; i < n; i++) {
-			for(int j = 0; j < n; j++) {
-				//물에 잠기는 지역이거나 이미 방문했으면 패스
-				if(k >= map[i][j] || visited[i][j]) continue;
-				bfs(i, j, k);
 				count++;
-			}//for
-		}//for
+			}
+		}//while
 		return count;
-	}
-	
+	}//private
 	public static void main(String[] args) throws NumberFormatException, IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		StringTokenizer st = new StringTokenizer(br.readLine());
+		n = Integer.parseInt(st.nextToken());
+		m = Integer.parseInt(st.nextToken());
+		k = Integer.parseInt(st.nextToken());
 		
-		n = Integer.parseInt(br.readLine());
-		map = new int[n][n];
-		for(int i = 0; i < n; i++) {
-			StringTokenizer st = new StringTokenizer(br.readLine());
-			for(int j = 0; j < n; j++) {
-				map[i][j] = Integer.parseInt(st.nextToken()); 
-			}
+		map = new int[n+1][m+1];
+		visited = new boolean[n+1][m+1];
+		//음쓰 자리 표시
+		for(int i = 0; i<k; i++) {
+			StringTokenizer st1 = new StringTokenizer(br.readLine());
+			int p1 = Integer.parseInt(st1.nextToken());
+			int p2 = Integer.parseInt(st1.nextToken());
+			map[p1][p2] = 1;//음쓰 있는 자리 표시 
 		}//for
-		int max_answer = 1;//안전지대의 최대값 1이 최소이므로 초기값을 1로 잡는다.
-		for(int k = 1; k<100; k++) {//k이하의 숫자는 물에 잠긴다.
-			int answer = bfs_answer(k);
-//			if(answer == 0) {//안잠긴 마을이 하나도 없으면 for문을 멈춘다.
-//				break;
-//			}
-			max_answer = Math.max(max_answer, answer);
-			
+		
+		answer = 1;
+		for(int i = 1; i<=n; i++) {
+			for(int j = 1; j<=m; j++) {
+				if(visited[i][j] || map[i][j] != 1) continue;//이미 방문했거나 음식물이 있는 자리가 아니면 패스
+				int answer_bfs = bfs(i,j);
+				answer = Math.max(answer_bfs, answer);
+			}//for
 		}//for
-		System.out.println(max_answer);
+		System.out.println(answer);
 	}
 }
