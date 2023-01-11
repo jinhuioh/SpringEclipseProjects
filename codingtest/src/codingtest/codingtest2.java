@@ -52,10 +52,83 @@ public class codingtest2 {
 //	예제 출력 2 
 //	.XX...X
 //	XX.....
+	static char[][] map;
+	static char[][] arr;
+	static int[] dx = {0,0,-1,1};
+	static int[] dy = {-1,1,0,0};
+	static int n,m;
+	
+	private static int bfs(int i, int j, char[][] map) {
+		int count = 0;
+		for(int k = 0; k<4; k++) {
+			int ny = i + dy[k];
+			int nx = j + dx[k];
+			if(ny<0 || ny>=n || nx<0 || nx>=m) {
+				continue;
+			}
+			if(map[ny][nx]=='.') { 
+				continue;
+			}
+			count++;
+		}//for
+		return count;
+	}
+	
 	public static void main(String[] args) throws NumberFormatException, IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer st = new StringTokenizer(br.readLine());
+		n = Integer.parseInt(st.nextToken());
+	    m = Integer.parseInt(st.nextToken());
+		map = new char[n][m];
+		arr = new char[n][m];
+		//정답을 넣을 이차원 리스트
+		List<List<String>> answer_list = new ArrayList<List<String>>();
+//		for(int j = 0; j < n; j++) {
+//			answer_list.add(new ArrayList<String>());
+//		}
+		
+		//배열에 값 입력받기
+		for(int i = 0; i < n; i++) {
+			String s = br.readLine();
+			for(int j = 0; j < m; j++) {
+				map[i][j] = s.charAt(j);
+				arr[i][j] = s.charAt(j);
+			}//for
+		}//for
+		
+		//지도 출력범위
+		int mini = n;
+		int minj = m;
+		int maxi = 0;
+		int maxj = 0;
+		//x가 근처 2개의 x와 인접하면 패스 아니면 점으로 바꾸기
+		for(int i = 0; i < n; i++) {
+			for(int j = 0; j < m; j++) {
+				if(map[i][j]=='.') continue;
+				int count_bfs = bfs(i, j, map);
+				if(count_bfs<2) {
+					arr[i][j] = '.';
+				}//if
+				else {
+					//지도 출력 범위 갱신
+					mini = Math.min(mini, i);
+					minj = Math.min(minj, j);
+					maxi = Math.max(maxi, i);
+					maxj = Math.max(maxj, j);
+				}
+				
+			}//for
+		}//for
 
+		for(int i1 = mini; i1 <= maxi; i1++) {
+			for(int j1 = minj; j1 <= maxj; j1++) {
+				System.out.print(arr[i1][j1]);
+			}//for
+			System.out.println();
+		}//for
+		
+
+		
 	}
 
 }
