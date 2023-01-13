@@ -8,40 +8,58 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Scanner;
 import java.util.StringTokenizer;
+//양
+//문제
+//미키의 뒷마당에는 특정 수의 양이 있다. 그가 푹 잠든 사이에 배고픈 늑대는 마당에 들어와 양을 공격했다.
+//
+//마당은 행과 열로 이루어진 직사각형 모양이다. 글자 '.' (점)은 빈 필드를 의미하며, 글자 '#'는 울타리를, 'o'는 양, 'v'는 늑대를 의미한다.
+//
+//한 칸에서 수평, 수직만으로 이동하며 울타리를 지나지 않고 다른 칸으로 이동할 수 있다면, 두 칸은 같은 영역 안에 속해 있다고 한다. 마당에서 "탈출"할 수 있는 칸은 어떤 영역에도 속하지 않는다고 간주한다.
+//
+//다행히 우리의 양은 늑대에게 싸움을 걸 수 있고 영역 안의 양의 수가 늑대의 수보다 많다면 이기고, 늑대를 우리에서 쫓아낸다. 그렇지 않다면 늑대가 그 지역 안의 모든 양을 먹는다.
+//
+//맨 처음 모든 양과 늑대는 마당 안 영역에 존재한다.
+//
+//아침이 도달했을 때 살아남은 양과 늑대의 수를 출력하는 프로그램을 작성하라.
+//
+//입력
+//첫 줄에는 두 정수 R과 C가 주어지며(3 ≤ R, C ≤ 250), 각 수는 마당의 행과 열의 수를 의미한다.
+//
+//다음 R개의 줄은 C개의 글자를 가진다. 이들은 마당의 구조(울타리, 양, 늑대의 위치)를 의미한다.
+//
+//출력
+//하나의 줄에 아침까지 살아있는 양과 늑대의 수를 의미하는 두 정수를 출력한다.
+//
+//예제 입력 1 
+//6 6
+//...#..
+//.##v#.
+//#v.#.#
+//#.o#.#
+//.###.#
+//...###
+//예제 출력 1 
+//0 2
 
 public class codingTest5 {
-	
-//	문제
-//	어떤 큰 도화지에 그림이 그려져 있을 때, 그 그림의 개수와, 그 그림 중 넓이가 가장 넓은 것의 넓이를 출력하여라. 단, 그림이라는 것은 1로 연결된 것을 한 그림이라고 정의하자. 가로나 세로로 연결된 것은 연결이 된 것이고 대각선으로 연결이 된 것은 떨어진 그림이다. 그림의 넓이란 그림에 포함된 1의 개수이다.
-//
-//	입력
-//	첫째 줄에 도화지의 세로 크기 n(1 ≤ n ≤ 500)과 가로 크기 m(1 ≤ m ≤ 500)이 차례로 주어진다. 두 번째 줄부터 n+1 줄 까지 그림의 정보가 주어진다. (단 그림의 정보는 0과 1이 공백을 두고 주어지며, 0은 색칠이 안된 부분, 1은 색칠이 된 부분을 의미한다)
-//
-//	출력
-//	첫째 줄에는 그림의 개수, 둘째 줄에는 그 중 가장 넓은 그림의 넓이를 출력하여라. 단, 그림이 하나도 없는 경우에는 가장 넓은 그림의 넓이는 0이다.
-//
-//	예제 입력 1 
-//	6 5
-//	1 1 0 1 1
-//	0 1 1 0 0
-//	0 0 0 0 0
-//	1 0 1 1 1
-//	0 0 1 1 1
-//	0 0 1 1 1
-//	예제 출력 1 
-//	4
-//	9
-	static int[][] map;
+	static char[][] map;
 	static boolean[][] visited;
 	static int n,m;
-	static int[] dx = {-1,1,0,0};
-	static int[] dy = {0,0,-1,1};
-	//탐색한 그림의 크기 리턴
-	private static int bfs(int i, int j) {
+	static int[] dx = {0,0,1,-1};
+	static int[] dy = {1,-1,0,0};
+	
+	private static Queue<int[]> bfs(int i, int j) {
+		int sheep = 0;
+		int wolf = 0;
+		if(map[i][j] == 'v') {
+			wolf = 1;
+		}
+		if(map[i][j] == 'o') {
+			sheep = 1;
+		}
+		visited[i][j] = true;
 		Queue<int[]> q = new LinkedList<int[]>();
 		q.add(new int[] {i,j});
-		visited[i][j] = true;
-		int artMax = 1;
 		while (!q.isEmpty()) {
 			int y = q.peek()[0];
 			int x = q.peek()[1];
@@ -50,42 +68,57 @@ public class codingTest5 {
 				int ny = y + dy[k];
 				int nx = x + dx[k];
 				if(ny<0 || ny>=n || nx<0 || nx>=m) continue;
-				if(visited[ny][nx] || map[ny][nx]==0) continue;
+				if(visited[ny][nx] || map[ny][nx] == '#') continue;
 				visited[ny][nx] = true;
-				q.add(new int[] {ny, nx});
-				artMax++;
-			}
-		}
-		
-		return artMax;
+				q.add(new int[] {ny,nx});
+				if(map[ny][nx] == 'o') {
+//					System.out.println("o증가 "+ny+" "+nx);
+					sheep++;
+				}
+				if(map[ny][nx] == 'v') {
+//					System.out.println("v증가 "+ny+" "+nx);
+					wolf++;
+				}//if
+			}//for
+		}//while
+		Queue<int[]> q1 = new LinkedList<int[]>();
+		q1.add(new int[] {sheep, wolf});
+		return q1;
 	}
+	
 	public static void main(String[] args) throws NumberFormatException, IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer st = new StringTokenizer(br.readLine());
 		n = Integer.parseInt(st.nextToken());
 		m = Integer.parseInt(st.nextToken());
-		map = new int[n][m];
+		map = new char[n][m];
 		visited = new boolean[n][m];
 		for(int i = 0; i<n; i++) {
-			StringTokenizer st1 = new StringTokenizer(br.readLine());
+			String s = br.readLine();
 			for(int j = 0; j<m; j++) {
-				map[i][j] = Integer.parseInt(st1.nextToken());
+				map[i][j] = s.charAt(j); 
 			}//for
 		}//for
-		
-		//탐색시작
-		int count = 0;
-		int artMax = 0;
+		int sheep = 0;
+		int wolf = 0;
 		for(int i = 0; i<n; i++) {
 			for(int j = 0; j<m; j++) {
-				if(visited[i][j] || map[i][j]==0) continue;
-				int artSize = bfs(i, j);
-				artMax = Math.max(artMax, artSize);//가장 큰 그림의 개수
-				count++;
+				//#이거나 이미 방문했으면 패스
+				if(visited[i][j] || map[i][j] == '#') continue;
+				Queue<int[]> sheep_wolf = bfs(i, j);
+				int sheep0 = sheep_wolf.peek()[0];
+				int wolf0 = sheep_wolf.peek()[1];
+				sheep_wolf.poll();
+				if(sheep0>wolf0) {
+					sheep += sheep0;
+				}
+				else {
+					wolf += wolf0;
+				}
+				
 			}//for
 		}//for
-		System.out.println(count);
-		System.out.println(artMax);
+		System.out.println(sheep+" "+wolf);		
 	}
 
 }
