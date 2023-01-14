@@ -1,16 +1,6 @@
 package codingtest;
 
-import java.awt.Window.Type;
-import java.beans.Visibility;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 //인구이동
 //입력
 //첫째 줄에 N, L, R이 주어진다. (1 ≤ N ≤ 50, 1 ≤ L ≤ R ≤ 100)
@@ -21,9 +11,6 @@ import java.util.Queue;
 //
 //출력
 //인구 이동이 며칠 동안 발생하는지 첫째 줄에 출력한다.
-import java.util.StringTokenizer;
-
-import org.omg.CORBA.PUBLIC_MEMBER;
 
 //예제 입력 1 
 //2 20 50
@@ -34,61 +21,96 @@ import org.omg.CORBA.PUBLIC_MEMBER;
 public class codingTest3 {
 	
 	static int n,l,r;
-	static int[][] map,arr;
+	static int[][] map;
 	static boolean[][] visited;
 	static int[] dy = {0,0,-1,1};
 	static int[] dx = {-1,1,0,0};
-	static ArrayList<Node> list;
-
-
+	static ArrayList<Node> list;//인구이동하는 위치값(x,y)를 넣을 리스트
 	
-	public static void main(String[] args) throws NumberFormatException, IOException {
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		StringTokenizer st = new StringTokenizer(br.readLine());
-		n = Integer.parseInt(st.nextToken());
-		l = Integer.parseInt(st.nextToken());
-		r = Integer.parseInt(st.nextToken());
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		n = sc.nextInt();
+		l = sc.nextInt();
+		r = sc.nextInt();
 		
 		map = new int[n][n];
-		arr = new int[n][n];
 		//map입력
-		Queue<int[]> q = new LinkedList<int[]>();
-		for(int i = 0; i<n; i++) {
-			StringTokenizer st1 = new StringTokenizer(br.readLine());
-			for(int j = 0; j<n; j++) {
-				 int one = Integer.parseInt(st1.nextToken());
-				 map[i][j] = one;
-				 if(one>=l && one<=r) {
-					 q.add(new int[] {i,j});//인구이동이 일어나야 하는 위치이면 q에 넣기
-				 }//if
-			}//for
-		}//for
-
-		while(!q.isEmpty()) {
-			//인구이동이 일어나야 하는 위치이면(값에 변화가 있고 범위안에 있으면) q에 넣기
-			int y = q.peek()[0];
-			int x = q.peek()[1];
-			q.poll();
-			//국경 열음. 이동 첫째날
-			arr[y][x] = 1;
-		}//while
-		
-		
-		visited = new boolean[n][n];//초기화 해줘야함
 		for(int i = 0; i<n; i++) {
 			for(int j = 0; j<n; j++) {
-				
-				if(arr[i][j] !=0 && !visited[i][j]) {
-					bfs(i,j);
-				}
+				 map[i][j] = sc.nextInt();
 			}//for
 		}//for
+		System.out.println(move());
 	
+	}//public
+	public static int move() {
+		//인구이동이 없을때까지 반복. 인구이동이 있으면 m변수를 true로 바꿔주어서 while문이 실행되도록 한다.
+		int answer = 0;//인구이동한 날 수
+		while (true) {
+			boolean m = false;
+			visited = new boolean[n][n];//while문 돌 때마다 초기화
+			
+			for(int i = 0; i<n; i++) {
+				for(int j = 0; j<n; j++) {
+					if(!visited[i][j]) {//이미 탐색한 나라면  패스
+						//인구이동하는 총인구수 반환(해당 위치 값을 list에 넣기)
+						int sum = bfs(i, j);
+						if(list.size()>1) {//국경이동하는 나라가 있으면 그 평균 구하고 인구수 갱신
+							c_bfs(sum);
+							m = true;
+						}
+					}//for
+				}//for
+			}
+			if(!m) return answer;
+			answer++;//이동했으므로 날짜 수 증가
+		}
 	}
-	public static class Node {
-		int x;
+	//인구이동하는 총인구수 반환
+	public static int bfs(int i, int j) {
+		visited[i][j] = true;
+		//이동할 국가 위치 넣을 큐
+		Queue<Node> q = new LinkedList<>();
+		//이동한 국가 위치 넣어서 반환할 리스트(리스트 길이가 1이상이면 국가이동이 일어난 것이므로 main class에서 while문이 계속 돌게된다.)
+		list = new ArrayList<>();//초기화(국가 이동할 때마다 list초기화 해주어야 함)
+		
+		q.offer(new Node(i, j));
+		list.add(new Node(i, j));
+		
+		int sum = map[i][j];//초기값
+		while (!q.isEmpty()) {
+			Node c = q.poll();//q에 있는 (i,j)값 c에 넣기
+			
+			for(int i1 = 0; i1<4; i1++) {
+				int nx = c.x + dx[i1]; 
+				int ny = c.y + dy[i1];
+				if(ny >=0 && ny <n && nx>=0 && nx<n && !visited[ny][nx]) {
+					int diff = Math.abs(map[c.x][c.y] - map[ny][nx]);
+					if(l <= diff && r >= diff) {
+						q.offer(new Node(nx, ny));//q에 값 넣기
+						list.add(new Node(nx, ny));
+						sum += map[nx][ny];// 이동 가능 국가의 인구수 sum에 누적
+						visited[nx][ny] = true; 
+					}
+				}
+			}
+			
+		}//while
+		return sum;
+	}
+	
+	//국경이동하는 나라가 있으면 그 평균 구하고 인구수 갱신
+	public static void c_bfs(int sum) {
+		int avg = sum / list.size();
+		for(Node n: list) {
+			map[n.x][n.y] = avg;// 인구 이동 갱신
+		}
+	}
+	
+	public static class Node{
+		int x; 
 		int y;
-		public Node(int x, int y) {
+		public Node(int x , int y) {
 			this.x = x;
 			this.y = y;
 		}
