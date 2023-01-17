@@ -3,94 +3,117 @@ package codingtest;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 import java.util.StringTokenizer;
 
+
+
+class bfsq {
+	int y;
+	int x;
+	bfsq(int y, int x){
+		this.y = y;
+		this.x = x;
+	}
+}
+
 public class codingTest4 {
-//음식물 피하기
-//	문제
-//	코레스코 콘도미니엄 8층은 학생들이 3끼의 식사를 해결하는 공간이다. 그러나 몇몇 비양심적인 학생들의 만행으로 음식물이 통로 중간 중간에 떨어져 있다. 이러한 음식물들은 근처에 있는 것끼리 뭉치게 돼서 큰 음식물 쓰레기가 된다. 
-//
-//	이 문제를 출제한 선생님은 개인적으로 이러한 음식물을 실내화에 묻히는 것을 정말 진정으로 싫어한다. 참고로 우리가 구해야 할 답은 이 문제를 낸 조교를 맞추는 것이 아니다. 
-//
-//	통로에 떨어진 음식물을 피해가기란 쉬운 일이 아니다. 따라서 선생님은 떨어진 음식물 중에 제일 큰 음식물만은 피해 가려고 한다. 
-//
-//	선생님을 도와 제일 큰 음식물의 크기를 구해서 “10ra"를 외치지 않게 도와주자.
-//
+//회장 뽑기
 //	입력
-//	첫째 줄에 통로의 세로 길이 N(1 ≤ N ≤ 100)과 가로 길이 M(1 ≤ M ≤ 100) 그리고 음식물 쓰레기의 개수 K(1 ≤ K ≤ N×M)이 주어진다.  그리고 다음 K개의 줄에 음식물이 떨어진 좌표 (r, c)가 주어진다.
-//
-//	좌표 (r, c)의 r은 위에서부터, c는 왼쪽에서부터가 기준이다. 입력으로 주어지는 좌표는 중복되지 않는다.
+//	입력의 첫째 줄에는 회원의 수가 있다. 단, 회원의 수는 50명을 넘지 않는다. 둘째 줄 이후로는 한 줄에 두 개의 회원번호가 있는데, 이것은 두 회원이 서로 친구임을 나타낸다. 회원번호는 1부터 회원의 수만큼 붙어 있다. 마지막 줄에는 -1이 두 개 들어있다.
 //
 //	출력
-//	첫째 줄에 음식물 중 가장 큰 음식물의 크기를 출력하라.
-//
+//	첫째 줄에는 회장 후보의 점수와 후보의 수를 출력하고, 두 번째 줄에는 회장 후보를 오름차순으로 모두 출력한다.
 //	예제 입력 1 
-//	3 4 5
-//	3 2
-//	2 2
-//	3 1
+//	5
+//	1 2
 //	2 3
-//	1 1
+//	3 4
+//	4 5
+//	2 4
+//	5 3
+//	-1 -1
 //	예제 출력 1 
-//	4
-	static int[][] map;
-	static boolean[][] visited;
-	static int answer;//가장 큰 음쓰 크기가 들어갈 변수
-	static int n,m,k;
-	static int[] dx = {0,0,1,-1};
-	static int[] dy = {1,-1,0,0};
+//	2 3
+//	2 3 4
 	
-	private static int bfs(int i, int j) {
-		Queue<int[]> q = new LinkedList<int[]>();
-		q.add(new int[] {i,j});
-		visited[i][j] = true;
-		int count = 1;//음식물 쓰레기 셀 변수
+	static int[][] map,arr;
+	static boolean[][] visited;
+	static int n;
+	static Queue<bfsq> q;
+	static List<Integer> answer_list;
+	//i번째 사람의 후보 점수 구하기
+	private static int bfs(int i) {
+		//후보점수 초기값
+		int result = 1;
+		//q에 친구 위치 넣어서 탐색 시작
+		q = new LinkedList<bfsq>();
+		
+		for(int j = 1; j<=n; j++) {//i번째 행 1부터 n까지 탐색
+			if(map[i][j] == 1) {//친구면
+				arr[i][j] = 1; 
+				visited[i][j] = true;//방문표시
+				q.add(new bfsq(i, j));
+			}//if
+		}//for
+		
 		while (!q.isEmpty()) {
-			int y = q.peek()[0];
-			int x = q.peek()[1];
-			q.poll();
-			
-			for(int p=0; p<4; p++) {
-				int ny = y + dy[p];
-				int nx = x + dx[p];
-				if(ny<1 || ny>n || nx<1 || nx>m) continue;
-				if(map[ny][nx] !=1 || visited[ny][nx]) continue;
-				
-				q.add(new int[] {ny, nx});
-				visited[ny][nx] = true;
-				count++;
-			}
+			bfsq qp = q.poll();
+			int y = qp.y;
+			int x = qp.x;
+//			System.out.println("y>  "+y);
+			//for문 돌리면서 친구고 방문한 적 없으면 (1이면) 큐에 넣기
+			for(int k = 1; k<=n; k++) {
+				if(map[x][k] == 1 && !visited[x][k]) {
+					arr[x][k] = arr[y][x] + 1;//값 증가
+					visited[x][k] = true;//방문표시 
+					q.add(new bfsq(x, k));
+					result = Math.max(result, arr[x][k]);
+				}//if
+			}//for
 		}//while
-		return count;
-	}//private
+		return result;
+	}
+	
 	public static void main(String[] args) throws NumberFormatException, IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		StringTokenizer st = new StringTokenizer(br.readLine());
-		n = Integer.parseInt(st.nextToken());
-		m = Integer.parseInt(st.nextToken());
-		k = Integer.parseInt(st.nextToken());
-		
-		map = new int[n+1][m+1];
-		visited = new boolean[n+1][m+1];
-		//음쓰 자리 표시
-		for(int i = 0; i<k; i++) {
-			StringTokenizer st1 = new StringTokenizer(br.readLine());
-			int p1 = Integer.parseInt(st1.nextToken());
-			int p2 = Integer.parseInt(st1.nextToken());
-			map[p1][p2] = 1;//음쓰 있는 자리 표시 
-		}//for
-		
-		answer = 1;
+		n = Integer.parseInt(br.readLine());
+		map = new int[n+1][n+1];
+		//map 입력받기//친구면 1로 표기
+		while (true) {
+			StringTokenizer st = new StringTokenizer(br.readLine());
+			int n1 = Integer.parseInt(st.nextToken());
+			int n2 = Integer.parseInt(st.nextToken());
+			if(n1 == -1 && n2 == -1) break;
+			map[n1][n2] = 1; 
+			map[n2][n1] = 1; 
+		}
+		answer_list = new ArrayList<Integer>();
+		answer_list.add(Integer.MAX_VALUE);//1부터 시작하므로 0번째 인덱스에 필요없는 값을 넣어준다.
 		for(int i = 1; i<=n; i++) {
-			for(int j = 1; j<=m; j++) {
-				if(visited[i][j] || map[i][j] != 1) continue;//이미 방문했거나 음식물이 있는 자리가 아니면 패스
-				int answer_bfs = bfs(i,j);
-				answer = Math.max(answer_bfs, answer);
-			}//for
+			arr = new int[n+1][n+1];
+			visited = new boolean[n+1][n+1];
+			//1부터 n까지 회장 후보의 점수 구하기
+//			System.out.println(i+" 함수실행!!");
+			int result = bfs(i);
+			answer_list.add(result);
 		}//for
-		System.out.println(answer);
+		int count = 0;
+		int list_min = Collections.min(answer_list);
+		StringBuilder sb = new StringBuilder();
+		for(int i=0; i<answer_list.size(); i++) {
+			if(list_min == answer_list.get(i)) {
+				sb.append(i).append(" ");
+				count++;
+			}
+		}
+		sb.setLength(sb.length()-1);
+		System.out.println((list_min-1)+" "+count);
+		System.out.println(sb);
 	}
 }
