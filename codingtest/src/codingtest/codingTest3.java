@@ -7,7 +7,6 @@ import java.io.InputStreamReader;
 import java.util.*;
 
 import javax.swing.plaf.SliderUI;
-public class codingTest3 {
 //	문제
 //	N×M 크기의 공간에 아기 상어 여러 마리가 있다. 공간은 1×1 크기의 정사각형 칸으로 나누어져 있다. 한 칸에는 아기 상어가 최대 1마리 존재한다.
 //
@@ -30,85 +29,80 @@ public class codingTest3 {
 //	0 0 0 1
 //	예제 출력 1 
 //	2	
-	static int[][] map;
-	static boolean visited[][];
-	static int[] dx = {-1, -1, -1, 0, 1, 1, 1, 0};
-	static int[] dy = {-1, 0, 1, 1, 1, 0, -1, -1};
-	public static void main(String[] args) throws NumberFormatException, IOException, InterruptedException {
-
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		StringTokenizer st = new StringTokenizer(br.readLine());
-		
-		int N = Integer.parseInt(st.nextToken());
-		int M = Integer.parseInt(st.nextToken());
-		
-		map = new int[N][M];
-
-		Queue<int[]> q = new LinkedList<>();
-		
-		for (int i = 0; i < N; i++) {
-			st = new StringTokenizer(br.readLine());
-			for (int j = 0; j < M; j++) {
-				map[i][j] = Integer.parseInt(st.nextToken());
-                // 상어가 있는 위치 큐에 add
-				if (map[i][j] == 1) {
-					q.add(new int[] {i, j});
-				}
-			}
-		}
-		// 입력 종료
-		
-        // 거리 시작이 2부터 시작이여서 1을 빼주고 출력
-		System.out.println(BFS(N, M, q) - 1);
-		
-//			// 출력
-//			System.out.println("*******");
-//			StringBuilder sb = new StringBuilder();
-//			for (int i = 0; i < N; i++) {
-//				for (int j = 0; j < M; j++) {
-//					sb.append(map[i][j] + " ");
-//				}
-//				sb.append("\n");
-//			}
-//			
-//			System.out.println(sb);
-		
+class node{
+	int y;
+	int x;
+	node(int y, int x){
+		this.y = y;
+		this.x = x;
 	}
+}
 
-	public static int BFS(int N, int M, Queue<int[]> q) {
+public class codingTest3 {
+	static int[] dy = {0,0,-1,-1,1,1,1,-1};
+	static int[] dx = {1,-1,1,-1,1,-1,0,0};
+	static int[][] map;
+	static int[][] arr;
+	static boolean[][] visited;
+	static int n,m;
+	
+	private static int bfs(int i, int j) {
+		visited = new boolean[n][m];
+		arr = new int[n][m];
+		Queue<node> q = new LinkedList<node>();
+		int count = Integer.MAX_VALUE;//안전거리 계산 변수
 		
-		visited = new boolean[N][M];
-		int check = 2;
+		q.add(new node(i, j));
+		visited[i][j] = true;
 		
 		while (!q.isEmpty()) {
-			
-			int[] now = q.poll();
-			
-            // 좌상, 상, 우상, 우, 우하, 하, 좌하, 좌 순으로 8방향 탐색
-			for (int i = 0; i < 8; i++) {
+			node qp = q.poll();
+			for(int k = 0; k<8; k++) {
+				int ny = qp.y + dy[k];
+				int nx = qp.x + dx[k];
+				if(ny<0 || nx<0 || ny>=n || nx>=m || visited[ny][nx]) continue;
 				
-				int nextX = now[0] + dx[i];
-				int nextY = now[1] + dy[i];
-				
-				if (nextX < 0 || nextY < 0 || nextX >= N || nextY >= M) {
-					continue;
+				if(map[ny][nx] == 1) {
+					count = Math.min(count, arr[qp.y][qp.x] + 1);
+//					System.out.println(qp.y+" "+qp.x+"count!!>>"+ count);
+					break;
 				}
-				
-                // 1보다 크다는 것은 이미 값이 들어간 경우이면서 현재 값보다 큰 경우임
-				if (map[nextX][nextY] >= 1) {
-					continue;
-				}
-				
-				visited[nextX][nextY] = true;
-				map[nextX][nextY] = map[now[0]][now[1]] + 1;
-				q.add(new int[] {nextX, nextY});
-                // 최대거리
-				check = map[nextX][nextY] > check ? map[nextX][nextY] : check;
+				arr[ny][nx] = arr[qp.y][qp.x] + 1;
+//				System.out.println("qp.y>>"+qp.y + " qp.x>> "+qp.x +" nynx>>"+ ny+" "+nx+" "+" arrnynx>>" + arr[ny][nx]);
+				visited[ny][nx] = true;
+				q.add(new node(ny, nx));
 			}
-		
 		}
+		return count;
+	}
+	
+	public static void main(String[] args) throws NumberFormatException, IOException, InterruptedException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		StringTokenizer st = new StringTokenizer(br.readLine());
+		n = Integer.parseInt(st.nextToken());
+		m = Integer.parseInt(st.nextToken());
 		
-		return check;
+		map = new int[n][m];
+
+		//map입력받기
+		for(int i = 0; i<n; i++) {
+			st = new StringTokenizer(br.readLine());
+			for(int j = 0; j<m; j++) {
+				map[i][j] = Integer.parseInt(st.nextToken());
+			}//for
+		}//for
+		
+		//첫번째 위치부터 가장 가까운 아기상어와의 거리 구하기
+		int answer = 1;//초기값
+		for(int i = 0; i<n; i++) {
+			for(int j = 0; j<m; j++) {
+				if( map[i][j] != 1) {
+					int answer_bfs = bfs(i,j); //해당 위치의 안전거리 값
+					answer = Math.max(answer, answer_bfs);
+				}//if
+			}//for
+		}//for
+		System.out.println(answer);
 	}
 
 }
