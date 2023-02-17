@@ -8,78 +8,107 @@ import java.util.*;
 
 import javax.swing.plaf.SliderUI;
 public class codingTest3 {
-//	입출력 예
-//	cap	n	deliveries	pickups	result
-//	4	5	[1, 0, 3, 1, 2]	[0, 3, 0, 4, 0]	16
-//	2	7	[1, 0, 2, 0, 1, 0, 2]	[0, 2, 0, 1, 0, 2, 0]	30
-	//택배와 배달 수거하기
-	// 마지막 위치부터 차례대로 계산
-	// cap-마지막수의 배달개수 + 수거할택배 개수<= cap 이면 실행.
-	
-	// 시작 위치 갱신! 해줘야한다.
-	
+//	문제
+//	N×M 크기의 공간에 아기 상어 여러 마리가 있다. 공간은 1×1 크기의 정사각형 칸으로 나누어져 있다. 한 칸에는 아기 상어가 최대 1마리 존재한다.
+//
+//	어떤 칸의 안전 거리는 그 칸과 가장 거리가 가까운 아기 상어와의 거리이다. 두 칸의 거리는 하나의 칸에서 다른 칸으로 가기 위해서 지나야 하는 칸의 수이고, 이동은 인접한 8방향(대각선 포함)이 가능하다.
+//
+//	안전 거리가 가장 큰 칸을 구해보자. 
+//
+//	입력
+//	첫째 줄에 공간의 크기 N과 M(2 ≤ N, M ≤ 50)이 주어진다. 둘째 줄부터 N개의 줄에 공간의 상태가 주어지며, 0은 빈 칸, 1은 아기 상어가 있는 칸이다. 빈 칸과 상어의 수가 각각 한 개 이상인 입력만 주어진다.
+//
+//	출력
+//	첫째 줄에 안전 거리의 최댓값을 출력한다.
+//
+//	예제 입력 1 
+//	5 4
+//	0 0 1 0
+//	0 0 0 0
+//	1 0 0 0
+//	0 0 0 0
+//	0 0 0 1
+//	예제 출력 1 
+//	2	
+	static int[][] map;
+	static boolean visited[][];
+	static int[] dx = {-1, -1, -1, 0, 1, 1, 1, 0};
+	static int[] dy = {-1, 0, 1, 1, 1, 0, -1, -1};
 	public static void main(String[] args) throws NumberFormatException, IOException, InterruptedException {
+
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		int n = 7;
-		int cap = 2;
-        int[] deliveries = new int[] {1, 0, 2, 0, 1, 0, 2};
-        int[] pickups = new int[] {0, 2, 0, 1, 0, 2, 0};
-        Solution s = new Solution();
-		System.out.println(s.solution(cap, n, deliveries, pickups));
-	
+		StringTokenizer st = new StringTokenizer(br.readLine());
+		
+		int N = Integer.parseInt(st.nextToken());
+		int M = Integer.parseInt(st.nextToken());
+		
+		map = new int[N][M];
+
+		Queue<int[]> q = new LinkedList<>();
+		
+		for (int i = 0; i < N; i++) {
+			st = new StringTokenizer(br.readLine());
+			for (int j = 0; j < M; j++) {
+				map[i][j] = Integer.parseInt(st.nextToken());
+                // 상어가 있는 위치 큐에 add
+				if (map[i][j] == 1) {
+					q.add(new int[] {i, j});
+				}
+			}
+		}
+		// 입력 종료
+		
+        // 거리 시작이 2부터 시작이여서 1을 빼주고 출력
+		System.out.println(BFS(N, M, q) - 1);
+		
+//			// 출력
+//			System.out.println("*******");
+//			StringBuilder sb = new StringBuilder();
+//			for (int i = 0; i < N; i++) {
+//				for (int j = 0; j < M; j++) {
+//					sb.append(map[i][j] + " ");
+//				}
+//				sb.append("\n");
+//			}
+//			
+//			System.out.println(sb);
+		
 	}
-}
-	// deliveries_len은 배열 deliveries의 길이입니다.
-	// pickups_len은 배열 pickups의 길이입니다.
-	class Solution {
-		public long solution(int cap, int n, int[] deliveries, int[] pickups) throws InterruptedException {
-	        long answer = 0;
-	        int start = 0;
-	        int n2 = n;
-	        while (true) {
-	        	int c = 0;
-//	        	for(int i = 0; i<n; i++) {
-//	        		System.out.print(deliveries[i]+" ");
-//	        	}
-//	        	System.out.println();
-//	        	for(int i = 0; i<n; i++) {
-//	        		System.out.print(pickups[i]+" ");
-//	        	}
-//	        	System.out.println();
-				for(int i = n-1; i>=0; i--) {
-					if(deliveries[i] != 0 || pickups[i] != 0) {
-						c=1;
-						start = i;
-						break;
-					}
-				}//for
-				
-				if(c==0) {//전부 0 이므로
-					return answer;
-				}//if
-				
-				//갱신
-				int pick = 0;
-				int deli = 0;
+
+	public static int BFS(int N, int M, Queue<int[]> q) {
+		
+		visited = new boolean[N][M];
+		int check = 2;
+		
+		while (!q.isEmpty()) {
 			
-				for(int i = start; i>=0; i--) {
-					if(deli + deliveries[i] > cap) continue;
-					if(pick + pickups[i] > cap) continue;
-					deli += deliveries[i];
-					pick += pickups[i];
-					
-					if(deli-pick <= cap && deli <= cap && pick <= cap) {
-//						System.out.println("i>> "+ i);
-//						System.out.println("0으로 만들음");
-						deliveries[i] = 0;
-						pickups[i] = 0;
-					}
-				}//for
-				answer += (start+1)*2;
-//				System.out.println(answer);
-//				Thread.sleep(1000);
-//				System.out.println();
-			}//while
-	        
-	    }//public long     
+			int[] now = q.poll();
+			
+            // 좌상, 상, 우상, 우, 우하, 하, 좌하, 좌 순으로 8방향 탐색
+			for (int i = 0; i < 8; i++) {
+				
+				int nextX = now[0] + dx[i];
+				int nextY = now[1] + dy[i];
+				
+				if (nextX < 0 || nextY < 0 || nextX >= N || nextY >= M) {
+					continue;
+				}
+				
+                // 1보다 크다는 것은 이미 값이 들어간 경우이면서 현재 값보다 큰 경우임
+				if (map[nextX][nextY] >= 1) {
+					continue;
+				}
+				
+				visited[nextX][nextY] = true;
+				map[nextX][nextY] = map[now[0]][now[1]] + 1;
+				q.add(new int[] {nextX, nextY});
+                // 최대거리
+				check = map[nextX][nextY] > check ? map[nextX][nextY] : check;
+			}
+		
+		}
+		
+		return check;
 	}
+
+}
