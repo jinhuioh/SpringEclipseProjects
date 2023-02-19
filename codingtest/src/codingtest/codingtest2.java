@@ -17,79 +17,64 @@ import java.util.LinkedList;
 import java.util.StringTokenizer;
 import javax.management.Query;
 import javax.swing.JPopupMenu.Separator;
-//¹®Á¦
-//¼Ûµµ¿¡ »ç´Â »ó±ÙÀÌ¿Í Ä£±¸µéÀº ¼Ûµµ¿¡¼­ ¿­¸®´Â ÆæÅ¸Æ÷Æ® ¶ô Æä½ºÆ¼¹ú¿¡ °¡·Á°í ÇÑ´Ù. ¿ÃÇØ´Â ¸ÆÁÖ¸¦ ¸¶½Ã¸é¼­ °É¾î°¡±â·Î Çß´Ù. Ãâ¹ßÀº »ó±ÙÀÌ³× Áý¿¡¼­ ÇÏ°í, ¸ÆÁÖ ÇÑ ¹Ú½º¸¦ µé°í Ãâ¹ßÇÑ´Ù. ¸ÆÁÖ ÇÑ ¹Ú½º¿¡´Â ¸ÆÁÖ°¡ 20°³ µé¾îÀÖ´Ù. ¸ñÀÌ ¸¶¸£¸é ¾ÈµÇ±â ¶§¹®¿¡ 50¹ÌÅÍ¿¡ ÇÑ º´¾¿ ¸¶½Ã·Á°í ÇÑ´Ù. Áï, 50¹ÌÅÍ¸¦ °¡·Á¸é ±× Á÷Àü¿¡ ¸ÆÁÖ ÇÑ º´À» ¸¶¼Å¾ß ÇÑ´Ù.
+//ë¬¸ì œ
+//ì»´ê³µ ì¶œì‹ ì€ ì¹˜í‚¨ì§‘ì„ í•˜ê²Œ ë˜ì–´ìžˆë‹¤. í˜„ì‹¤ì„ ë¶€ì •í•˜ì§€ ë§ê³  ë°›ì•„ë“¤ì´ë©´ ë§ˆìŒì´ íŽ¸í•˜ë‹¤. ê²°êµ­ í˜¸ì„ì´ë„ 2050ë…„ì—ëŠ” ì¹˜í‚¨ì§‘ì„ í•˜ê³  ìžˆë‹¤. ì¹˜í‚¨ì§‘ ì´ë¦„ì€ "í˜¸ì„ì´ ë‘ë§ˆë¦¬ ì¹˜í‚¨"ì´ë‹¤.
 //
-//»ó±ÙÀÌÀÇ Áý¿¡¼­ Æä½ºÆ¼¹úÀÌ ¿­¸®´Â °÷Àº ¸Å¿ì ¸Õ °Å¸®ÀÌ´Ù. µû¶ó¼­, ¸ÆÁÖ¸¦ ´õ ±¸¸ÅÇØ¾ß ÇÒ ¼öµµ ÀÖ´Ù. ¹Ì¸® ÀÎÅÍ³ÝÀ¸·Î Á¶»ç¸¦ ÇØº¸´Ï ´ÙÇàÈ÷µµ ¸ÆÁÖ¸¦ ÆÄ´Â ÆíÀÇÁ¡ÀÌ ÀÖ´Ù. ÆíÀÇÁ¡¿¡ µé·ÈÀ» ¶§, ºó º´Àº ¹ö¸®°í »õ ¸ÆÁÖ º´À» »ì ¼ö ÀÖ´Ù. ÇÏÁö¸¸, ¹Ú½º¿¡ µé¾îÀÖ´Â ¸ÆÁÖ´Â 20º´À» ³ÑÀ» ¼ö ¾ø´Ù. ÆíÀÇÁ¡À» ³ª¼± Á÷ÈÄ¿¡µµ 50¹ÌÅÍ¸¦ °¡±â Àü¿¡ ¸ÆÁÖ ÇÑ º´À» ¸¶¼Å¾ß ÇÑ´Ù.
+//ì´ë²ˆì— í‚¤ì¹œ ë„ì‹œë¡œ ë¶„ì ì„ í™•ë³´í•˜ê²Œ ëœ í˜¸ì„ì´ ë‘ë§ˆë¦¬ ì¹˜í‚¨ì€ ë„ì‹œ ì•ˆì— 2ê°œì˜ ë§¤ìž¥ì„ ì§€ìœ¼ë ¤ê³  í•œë‹¤. ë„ì‹œëŠ” N ê°œì˜ ê±´ë¬¼ê³¼ M ê°œì˜ ë„ë¡œë¡œ ì´ë£¨ì–´ì ¸ ìžˆë‹¤. ê±´ë¬¼ì€ 1ë²ˆë¶€í„° Në²ˆì˜ ë²ˆí˜¸ë¥¼ ê°€ì§€ê³  ìžˆë‹¤. i ë²ˆì§¸ ë„ë¡œëŠ” ì„œë¡œ ë‹¤ë¥¸ ë‘ ê±´ë¬¼ Ai ë²ˆê³¼ Bi ë²ˆ ì‚¬ì´ë¥¼ 1 ì‹œê°„ì— ì–‘ë°©í–¥ìœ¼ë¡œ ì´ë™í•  ìˆ˜ ìžˆëŠ” ë„ë¡œì´ë‹¤.
 //
-//ÆíÀÇÁ¡, »ó±ÙÀÌ³× Áý, ÆæÅ¸Æ÷Æ® ¶ô Æä½ºÆ¼¹úÀÇ ÁÂÇ¥°¡ ÁÖ¾îÁø´Ù. »ó±ÙÀÌ¿Í Ä£±¸µéÀÌ Çàº¹ÇÏ°Ô Æä½ºÆ¼¹ú¿¡ µµÂøÇÒ ¼ö ÀÖ´ÂÁö ±¸ÇÏ´Â ÇÁ·Î±×·¥À» ÀÛ¼ºÇÏ½Ã¿À.
+//í‚¤ì¹œ ë„ì‹œì—ì„œ 2ê°œì˜ ê±´ë¬¼ì„ ê³¨ë¼ì„œ ì¹˜í‚¨ì§‘ì„ ì—´ë ¤ê³  í•œë‹¤. ì´ ë•Œ ì•„ë¬´ ê³³ì´ë‚˜ ì—´ ìˆœ ì—†ì–´ì„œ ëª¨ë“  ê±´ë¬¼ì—ì„œì˜ ì ‘ê·¼ì„±ì˜ í•©ì„ ìµœì†Œí™”í•˜ë ¤ê³  í•œë‹¤. ê±´ë¬¼ X ì˜ ì ‘ê·¼ì„±ì€ X ì—ì„œ ê°€ìž¥ ê°€ê¹Œìš´ í˜¸ì„ì´ ë‘ë§ˆë¦¬ ì¹˜í‚¨ì§‘ê¹Œì§€ ì™•ë³µí•˜ëŠ” ìµœë‹¨ ì‹œê°„ì´ë‹¤. ì¦‰, "ëª¨ë“  ê±´ë¬¼ì—ì„œ ê°€ìž¥ ê°€ê¹Œìš´ ì¹˜í‚¨ì§‘ê¹Œì§€ ì™•ë³µí•˜ëŠ” ìµœë‹¨ ì‹œê°„ì˜ ì´í•©"ì„ ìµœì†Œí™”í•  ìˆ˜ ìžˆëŠ” ê±´ë¬¼ 2ê°œë¥¼ ê³¨ë¼ì„œ ì¹˜í‚¨ì§‘ì„ ì—´ë ¤ê³  í•˜ëŠ” ê²ƒì´ë‹¤.
 //
-//ÀÔ·Â
-//Ã¹Â° ÁÙ¿¡ Å×½ºÆ® ÄÉÀÌ½ºÀÇ °³¼ö t°¡ ÁÖ¾îÁø´Ù. (t ¡Â 50)
+//ì»´ê³µì„ ì¡¸ì—…í•œ ì§€ 30ë…„ì´ ë„˜ì–´ê°€ëŠ” í˜¸ì„ì´ëŠ” ì´ì œ ì½”ë”©ìœ¼ë¡œ ì´ ë¬¸ì œë¥¼ í•´ê²°í•  ì¤„ ëª¨ë¥¸ë‹¤. ì•Œê³ ë¦¬ì¦˜ í‡´ë¬¼ í˜¸ì„ì´ë¥¼ ìœ„í•´ì„œ ìµœì ì˜ ìœ„ì¹˜ê°€ ë  ìˆ˜ ìžˆëŠ” ê±´ë¬¼ 2ê°œì˜ ë²ˆí˜¸ì™€ ê·¸ ë•Œì˜ "ëª¨ë“  ê±´ë¬¼ì—ì„œ ê°€ìž¥ ê°€ê¹Œìš´ ì¹˜í‚¨ì§‘ê¹Œì§€ ì™•ë³µí•˜ëŠ” ìµœë‹¨ ì‹œê°„ì˜ ì´í•©"ì„ ì¶œë ¥í•˜ìž. ë§Œì•½ ì´ëŸ¬í•œ ê±´ë¬¼ ì¡°í•©ì´ ì—¬ëŸ¬ ê°œë¼ë©´, ê±´ë¬¼ ë²ˆí˜¸ ì¤‘ ìž‘ì€ ê²Œ ë” ìž‘ì„ìˆ˜ë¡, ìž‘ì€ ë²ˆí˜¸ê°€ ê°™ë‹¤ë©´ í° ë²ˆí˜¸ê°€ ë” ìž‘ì„ìˆ˜ë¡ ì¢‹ì€ ê±´ë¬¼ ì¡°í•©ì´ë‹¤.
 //
-//°¢ Å×½ºÆ® ÄÉÀÌ½ºÀÇ Ã¹Â° ÁÙ¿¡´Â ¸ÆÁÖ¸¦ ÆÄ´Â ÆíÀÇÁ¡ÀÇ °³¼ö nÀÌ ÁÖ¾îÁø´Ù. (0 ¡Â n ¡Â 100).
+//ìž…ë ¥
+//ì²« ë²ˆì§¸ ì¤„ì— ê±´ë¬¼ì˜ ê°œìˆ˜ Nê³¼ ë„ë¡œì˜ ê°œìˆ˜ M ì´ ì£¼ì–´ì§„ë‹¤. ì´ì–´ì„œ M ê°œì˜ ì¤„ì— ê±¸ì³ì„œ ë„ë¡œì˜ ì •ë³´ Ai , Bi ê°€ ê³µë°±ìœ¼ë¡œ ë‚˜ë‰˜ì–´ì„œ ì£¼ì–´ì§„ë‹¤. ê°™ì€ ë„ë¡œê°€ ì¤‘ë³µë˜ì–´ ì£¼ì–´ì§€ëŠ” ê²½ìš°ëŠ” ì—†ë‹¤. ì–´ë–¤ ë‘ ê±´ë¬¼ì„ ìž¡ì•„ë„ ë„ë¡œë¥¼ ë”°ë¼ì„œ ì˜¤ê³  ê°€ëŠ” ë°©ë²•ì´ ì¡´ìž¬í•¨ì´ ë³´ìž¥ëœë‹¤.
 //
-//´ÙÀ½ n+2°³ ÁÙ¿¡´Â »ó±ÙÀÌ³× Áý, ÆíÀÇÁ¡, ÆæÅ¸Æ÷Æ® ¶ô Æä½ºÆ¼¹ú ÁÂÇ¥°¡ ÁÖ¾îÁø´Ù. °¢ ÁÂÇ¥´Â µÎ Á¤¼ö x¿Í y·Î ÀÌ·ç¾îÁ® ÀÖ´Ù. (µÎ °ª ¸ðµÎ ¹ÌÅÍ, -32768 ¡Â x, y ¡Â 32767)
+//ì¶œë ¥
+//í•œ ì¤„ì— ê±´ë¬¼ 2ê°œê°€ ì§€ì–´ì§ˆ ê±´ë¬¼ ë²ˆí˜¸ë¥¼ ì˜¤ë¦„ì°¨ìˆœìœ¼ë¡œ ì¶œë ¥í•˜ê³ , ê·¸ë•Œ ëª¨ë“  ë„ì‹œì—ì„œì˜ ì™•ë³µ ì‹œê°„ì˜ í•©ì„ ì¶œë ¥í•œë‹¤.
 //
-//¼Ûµµ´Â Á÷»ç°¢Çü ¸ð¾çÀ¸·Î »ý±ä µµ½ÃÀÌ´Ù. µÎ ÁÂÇ¥ »çÀÌÀÇ °Å¸®´Â x ÁÂÇ¥ÀÇ Â÷ÀÌ + y ÁÂÇ¥ÀÇ Â÷ÀÌ ÀÌ´Ù. (¸ÇÇØÆ° °Å¸®)
+//ë§Œì•½ ê±´ë¬¼ ì¡°í•©ì´ ë‹¤ì–‘í•˜ê²Œ ê°€ëŠ¥í•˜ë©´, ìž‘ì€ ë²ˆí˜¸ê°€ ë” ìž‘ì€ ê²ƒì„, ìž‘ì€ ë²ˆí˜¸ê°€ ê°™ë‹¤ë©´ í° ë²ˆí˜¸ê°€ ë” ìž‘ì€ ê±¸ ì¶œë ¥í•œë‹¤.
 //
-//Ãâ·Â
-//°¢ Å×½ºÆ® ÄÉÀÌ½º¿¡ ´ëÇØ¼­ »ó±ÙÀÌ¿Í Ä£±¸µéÀÌ Çàº¹ÇÏ°Ô Æä½ºÆ¼¹ú¿¡ °¥ ¼ö ÀÖÀ¸¸é "happy", Áß°£¿¡ ¸ÆÁÖ°¡ ¹Ù´Ú³ª¼­ ´õ ÀÌµ¿ÇÒ ¼ö ¾øÀ¸¸é "sad"¸¦ Ãâ·ÂÇÑ´Ù. 
+//ì œí•œ
+//2 â‰¤ N â‰¤ 100
+//N-1 â‰¤ M â‰¤ NÃ—(N - 1)/2
+//1 â‰¤ Ai , Biâ€‹ â‰¤ N (Ai  â‰  Bi)
+//ì˜ˆì œ ìž…ë ¥ 1 
+//5 4
+//1 3
+//4 2
+//2 5
+//3 2
+//ì˜ˆì œ ì¶œë ¥ 1 
+//1 2 6
 public class codingtest2 {
-	static int n,sx,sy,dx,dy;
+	static int[][] map;
+	static int n,m;
+	
+	private static int bfs(int i, int j) {
+		return 0;
+	}
+	
 	public static void main(String[] args) throws IOException{
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-		StringTokenizer st = null;
-
-		int t = Integer.parseInt(br.readLine());//Å×½ºÆ® ÄÉÀÌ½ºÀÇ °³¼ö
-		for(int tc=0; tc<t; tc++) {
-			n = Integer.parseInt(br.readLine());//ÆíÀÇÁ¡ °³¼ö
-			List<int[]> list = new ArrayList<>();//ÆíÀÇÁ¡ ÁÂÇ¥°¡ µé¾î°¥ ¸®½ºÆ®
-			for(int i=0; i<n+2; i++) {
-				st = new StringTokenizer(br.readLine());
-				int x = Integer.parseInt(st.nextToken());
-				int y = Integer.parseInt(st.nextToken());
-				if(i==0) {//½ÃÀÛÀ§Ä¡
-					sx = x;
-					sy = y;
-				}else if(i==n+1) {//µµÂøÀ§Ä¡
-					dx = x;
-					dy = y;
-				}else {
-					list.add(new int[]{x,y});
-				}
-			}
-
-			bw.write(bfs(list)? "happy\n" : "sad\n");//bfs°¡ trueÀÌ¸é happyÃâ·Â
-		}
-
-		bw.flush();
-		bw.close();
-	}
-	static boolean bfs(List<int[]> list) {
-		Queue<int[]> q = new LinkedList<>();
-		boolean[] visited = new boolean[n];
-		q.add(new int[] {sx,sy});
-		while(!q.isEmpty()) {
-			int[] pos = q.poll();
-			int px = pos[0], py = pos[1];//q¿¡¼­ÀÇ x,yÁÂÇ¥
-			if(Math.abs(px-dx) + Math.abs(py-dy) <= 1000) {//µµÂøÀ§Ä¡¿ÍÀÇ °Å¸®°¡ 1000ÀÌÇÏ¸é ¸®ÅÏ true
-				return true;
-			}
-
-			for(int i=0; i<n; i++) {
-				if(!visited[i]) {//i¹øÂ° ÆíÀÇÁ¡ÀÇ x,yÁÂÇ¥
-					int nx = list.get(i)[0], ny = list.get(i)[1];
-					int dis = Math.abs(px - nx) + Math.abs(py - ny);//ÇöÀçÀ§Ä¡¿Í i¹øÂ° ÆíÀÇÁ¡ À§Ä¡ÀÇ ¸àÇÏÆ° °Å¸®
-					if(dis <= 1000) {//±× °Å¸®°¡ 1000ÀÌÇÏ¸é
-						visited[i] = true;//visitedÂü 
-						q.add(new int[]{nx,ny});//Å¥¿¡ ÇØ´ç ÆíÀÇÁ¡ À§Ä¡¸¦ ³Ö¾îÁØ´Ù.
-					}
-				}
-			}
-		}
-		return false; 
+		StringTokenizer st = new StringTokenizer(br.readLine());
+		n = Integer.parseInt(st.nextToken());
+		m = Integer.parseInt(st.nextToken());
+		map = new int[n+1][n+1];
+		for(int i = 0; i<m; i++) {
+			st = new StringTokenizer(br.readLine());
+			int y = Integer.parseInt(st.nextToken());
+			int x = Integer.parseInt(st.nextToken());
+			map[y][x] = 1;
+			map[x][y] = 1;
+		}//for
+		
+		int answer_y = 0;
+		int answer_x = 0;
+		for(int i = 1; i<n+1; i++) {
+			for(int j = 1; j<n+1; j++) {
+				int answer = bfs(i, j);//i,jì—ì„œì˜ ê° ë„ì‹œì™€ì˜ ê±°ë¦¬ì˜ í•©
+			}//for
+		}//for
 	}
 
 }
