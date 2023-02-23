@@ -50,8 +50,13 @@ public class codingtest2 {
 	static int[][] map;
 	static int n,m;
 	
-	private static int bfs(int i, int j) {
-		return 0;
+	private static int min_bfs(int i, int j) {
+		int answer = 0;//두 점으로부터 각 점들의 최소거리 누적할 변수.
+		
+		for(int k = 1; k<n+1; k++) {
+			answer += Math.min(map[i][k], map[j][k]);
+		}
+		return answer;
 	}
 	
 	public static void main(String[] args) throws IOException{
@@ -60,6 +65,15 @@ public class codingtest2 {
 		n = Integer.parseInt(st.nextToken());
 		m = Integer.parseInt(st.nextToken());
 		map = new int[n+1][n+1];
+		for(int i = 1; i<n+1; i++) {
+			for(int j=1; j<n+1; j++) {
+				if(i==j) {
+					map[i][j] = 0;
+				}else {
+					map[i][j] = (int)1e9; 
+				}
+			}
+		}
 		for(int i = 0; i<m; i++) {
 			st = new StringTokenizer(br.readLine());
 			int y = Integer.parseInt(st.nextToken());
@@ -67,14 +81,32 @@ public class codingtest2 {
 			map[y][x] = 1;
 			map[x][y] = 1;
 		}//for
-		
-		int answer_y = 0;
-		int answer_x = 0;
-		for(int i = 1; i<n+1; i++) {
-			for(int j = 1; j<n+1; j++) {
-				int answer = bfs(i, j);//i,j에서의 각 도시와의 거리의 합
-			}//for
+
+		for(int k = 1; k<n+1; k++) {
+			for(int i = 1; i<n+1; i++) {
+				for(int j=1; j<n+1; j++) {
+					map[i][j] = Math.min(map[i][j], map[i][k] + map[k][j]); 
+					
+				}
+			}
 		}//for
+
+		//초기값
+		int min_y = 0;
+		int min_x = 0;
+		int min_node = Integer.MAX_VALUE;
+		//두 점 선택
+		for(int i = 1; i<n+1; i++) {
+			for(int j=1; j<n+1; j++) {
+				int node = min_bfs(i, j);
+				if(min_node> node) {
+					min_y = i;
+					min_x = j;
+					min_node = node;
+				}
+			}
+		}
+		System.out.println(min_y+" "+min_x+" "+min_node*2);
 	}
 
 }
