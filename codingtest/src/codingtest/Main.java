@@ -28,7 +28,8 @@ import javax.swing.JPopupMenu.Separator;
 //첫 줄에 DNA의 수 N과 문자열의 길이 M이 주어진다. 그리고 둘째 줄부터 N+1번째 줄까지 N개의 DNA가 주어진다. N은 1,000보다 작거나 같은 자연수이고, M은 50보다 작거나 같은 자연수이다.
 //
 //출력
-//첫째 줄에 Hamming Distance의 합이 가장 작은 DNA 를 출력하고, 둘째 줄에는 그 Hamming Distance의 합을 출력하시오. 그러한 DNA가 여러 개 있을 때에는 사전순으로 가장 앞서는 것을 출력한다.
+//첫째 줄에 Hamming Distance의 합이 가장 작은 DNA 를 출력하고, 둘째 줄에는 그 Hamming Distance의 합을 출력하시오. 
+//그러한 DNA가 여러 개 있을 때에는 사전순으로 가장 앞서는 것을 출력한다.
 //
 //예제 입력 1 
 //5 8
@@ -42,52 +43,75 @@ import javax.swing.JPopupMenu.Separator;
 //7
 
 public class Main {
+	static int n, m, b_answer, f_answer;
+	static String[] b_arr, f_arr;
+	static int[] b_count_arr, f_count_arr;
+	
+	//Hamming Distance의 합 구하기.
+	private static int dna(int index, String[] arr) {
+		String mid_dna = arr[index];
+		int sum = 0;
+		for(int i = 0; i<n; i++) {
+			for(int j = 0; j<m/2; j++) {
+				if(mid_dna.charAt(j) != arr[i].charAt(j)) {
+					sum++;
+				}
+				
+			}
+				
+		}
+		
+		return sum;
+	}
+	
 	public static void main(String[] args)throws Exception {
-
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		StringTokenizer st = new StringTokenizer(br.readLine());
+		
+		n = Integer.parseInt(st.nextToken());
+		m = Integer.parseInt(st.nextToken());
+		
+		b_arr = new String[n];
+		f_arr = new String[n];
+		
+		for(int i = 0; i<n; i++) {
+			String s = br.readLine();
+			f_arr[i] = s.substring(0,m/2);//string 슬라이싱.
+			b_arr[i] = s.substring(m/2);
+		}//for
+	
+		//정렬
+		Arrays.sort(f_arr);
+		Arrays.sort(b_arr);
+		
+		f_count_arr = new int[n];
+		b_count_arr = new int[n];
+		for(int i = 0; i<n; i++) {
+			int f_count = dna(i, f_arr);
+			f_count_arr[i] = f_count;
+			int b_count = dna(i, b_arr);
+			b_count_arr[i] = b_count;
+		}
+		//답
+		f_answer = Integer.MAX_VALUE;
+		b_answer = Integer.MAX_VALUE;
+		String f_answer_dna = null;
+		String b_answer_dna = null;
+		for(int i = 0; i<n; i++) {
+			if(f_count_arr[i] < f_answer) {
+				f_answer = f_count_arr[i];
+				f_answer_dna = f_arr[i];
+			}
+			if(b_count_arr[i] < b_answer) {
+				b_answer = b_count_arr[i];
+				b_answer_dna = b_arr[i];
+			}
+			
+		}
+		System.out.println(f_answer_dna + b_answer_dna);
+		System.out.println(f_answer + b_answer);
+		
 	}
 }
 
 
-//public class Main {
-//	static boolean[] visited;
-//	static int[] arr, change_arr;
-//	static int n, max_sum, sum;//숫자의 개수 
-//	//만들함수: 1. sum() : change_arr 순서대로 연산하며 합한 값 구하는 함수
-//	//		 2. dfs(int x) : change_arr 을 만드는 함수. 즉 arr에 들어있는 숫자 순서 바꾸는 dfs
-//	
-//	private static int sum() {
-//		int abs_sum = 0;
-//		for(int i = 1; i<n; i++) {
-//			abs_sum += Math.abs(change_arr[i] - change_arr[i-1]);
-//		}
-//		
-//		return abs_sum;
-//	}
-//	private static void dfs(int x) {
-//		if(x == n) {
-//			max_sum = Math.max(max_sum, sum());
-//		}
-//		for(int i = 0; i<n; i++) {
-//			if(!visited[i]) {
-//				change_arr[x] = arr[i];
-//				visited[i] = true;
-//				dfs(x+1);
-//				visited[i] = false;
-//			}
-//		}
-//	}
-//	
-//	public static void main(String[] args)throws Exception {
-//		Scanner sc = new Scanner(System.in);
-//		n = sc.nextInt();
-//		arr = new int[n];
-//		change_arr = new int[n];
-//		visited = new boolean[n];
-//		for(int i = 0; i<n; i++) {
-//			arr[i] = sc.nextInt();
-//		}//for
-//		
-//		dfs(0);
-//		System.out.println(max_sum);
-//	}
-//}
