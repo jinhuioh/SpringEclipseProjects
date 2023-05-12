@@ -42,74 +42,9 @@ import javax.swing.JPopupMenu.Separator;
 //TAAGATAC
 //7
 
+// https://zero-iron.tistory.com/53
 public class Main {
-	static int n, m, b_answer, f_answer;
-	static String[] b_arr, f_arr;
-	static int[] b_count_arr, f_count_arr;
-	
-	//Hamming Distance의 합 구하기.
-	private static int dna(int index, String[] arr) {
-		String mid_dna = arr[index];
-		int sum = 0;
-		for(int i = 0; i<n; i++) {
-			for(int j = 0; j<m/2; j++) {
-				if(mid_dna.charAt(j) != arr[i].charAt(j)) {
-					sum++;
-				}
-				
-			}
-				
-		}
-		
-		return sum;
-	}
-	
 	public static void main(String[] args)throws Exception {
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		StringTokenizer st = new StringTokenizer(br.readLine());
-		
-		n = Integer.parseInt(st.nextToken());
-		m = Integer.parseInt(st.nextToken());
-		
-		b_arr = new String[n];
-		f_arr = new String[n];
-		
-		for(int i = 0; i<n; i++) {
-			String s = br.readLine();
-			f_arr[i] = s.substring(0,m/2);//string 슬라이싱.
-			b_arr[i] = s.substring(m/2);
-		}//for
-	
-		//정렬
-		Arrays.sort(f_arr);
-		Arrays.sort(b_arr);
-		
-		f_count_arr = new int[n];
-		b_count_arr = new int[n];
-		for(int i = 0; i<n; i++) {
-			int f_count = dna(i, f_arr);
-			f_count_arr[i] = f_count;
-			int b_count = dna(i, b_arr);
-			b_count_arr[i] = b_count;
-		}
-		//답
-		f_answer = Integer.MAX_VALUE;
-		b_answer = Integer.MAX_VALUE;
-		String f_answer_dna = null;
-		String b_answer_dna = null;
-		for(int i = 0; i<n; i++) {
-			if(f_count_arr[i] < f_answer) {
-				f_answer = f_count_arr[i];
-				f_answer_dna = f_arr[i];
-			}
-			if(b_count_arr[i] < b_answer) {
-				b_answer = b_count_arr[i];
-				b_answer_dna = b_arr[i];
-			}
-			
-		}
-		System.out.println(f_answer_dna + b_answer_dna);
-		System.out.println(f_answer + b_answer);
 		
 	}
 }

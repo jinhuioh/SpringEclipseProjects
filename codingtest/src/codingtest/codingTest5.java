@@ -8,82 +8,124 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Scanner;
 import java.util.StringTokenizer;
-//¾ç
-//¹®Á¦
-//¹ÌÅ°ÀÇ µŞ¸¶´ç¿¡´Â Æ¯Á¤ ¼öÀÇ ¾çÀÌ ÀÖ´Ù. ±×°¡ Ç« Àáµç »çÀÌ¿¡ ¹è°íÇÂ ´Á´ë´Â ¸¶´ç¿¡ µé¾î¿Í ¾çÀ» °ø°İÇß´Ù.
+//ì…ë ¥
+//ì²« ë²ˆì§¸ ì¤„ì—ëŠ” ê²©ìì˜ í¬ê¸°ë¥¼ ë‚˜íƒ€ë‚´ëŠ” ë‘ ì •ìˆ˜ 
+//$R$ê³¼ 
+//$C$ê°€ ì£¼ì–´ì§„ë‹¤. (
+//$1 \le R,C \le 1\,000$)
 //
-//¸¶´çÀº Çà°ú ¿­·Î ÀÌ·ç¾îÁø Á÷»ç°¢Çü ¸ğ¾çÀÌ´Ù. ±ÛÀÚ '.' (Á¡)Àº ºó ÇÊµå¸¦ ÀÇ¹ÌÇÏ¸ç, ±ÛÀÚ '#'´Â ¿ïÅ¸¸®¸¦, 'o'´Â ¾ç, 'v'´Â ´Á´ë¸¦ ÀÇ¹ÌÇÑ´Ù.
+//ë‹¤ìŒ ì¤„ë¶€í„° 
+//$R$ê°œì˜ ì¤„ì— ê±¸ì³ ê²©ìì˜ ì •ë³´ê°€ ì£¼ì–´ì§„ë‹¤. ê° ì¤„ì€ 
+//$C$ê°œì˜ ì•ŒíŒŒë²³ ì†Œë¬¸ìë¡œ ì´ë£¨ì–´ì ¸ ìˆìœ¼ë©°, ìœ„, ì•„ë˜, ì™¼ìª½ ë˜ëŠ” ì˜¤ë¥¸ìª½ìœ¼ë¡œ ì¸ì ‘í•´ ìˆëŠ” ì¹¸ì´ ê°™ì€ ë¬¸ìë¼ëŠ” ê²ƒì€ ë‘ ì¹¸ì´ ê°™ì€ ì˜ì—­ì— ì†í•´ ìˆìŒì„ ì˜ë¯¸í•œë‹¤.
 //
-//ÇÑ Ä­¿¡¼­ ¼öÆò, ¼öÁ÷¸¸À¸·Î ÀÌµ¿ÇÏ¸ç ¿ïÅ¸¸®¸¦ Áö³ªÁö ¾Ê°í ´Ù¸¥ Ä­À¸·Î ÀÌµ¿ÇÒ ¼ö ÀÖ´Ù¸é, µÎ Ä­Àº °°Àº ¿µ¿ª ¾È¿¡ ¼ÓÇØ ÀÖ´Ù°í ÇÑ´Ù. ¸¶´ç¿¡¼­ "Å»Ãâ"ÇÒ ¼ö ÀÖ´Â Ä­Àº ¾î¶² ¿µ¿ª¿¡µµ ¼ÓÇÏÁö ¾Ê´Â´Ù°í °£ÁÖÇÑ´Ù.
+//ë‹¤ìŒ ì¤„ì—ëŠ” í•œë³„ì´ê°€ ì´ì„¸ê³„ì— ë–¨ì–´ì§„ ìœ„ì¹˜ë¥¼ ë‚˜íƒ€ë‚´ëŠ” ë‘ ì •ìˆ˜ 
+//$H_R$, 
+//$H_C$ê°€ ì£¼ì–´ì§„ë‹¤. ì´ëŠ” í•œë³„ì´ê°€ ìœ„ì—ì„œ 
+//$H_R$ë²ˆì§¸ ì¤„, ì™¼ìª½ì—ì„œ 
+//$H_C$ë²ˆì§¸ ì¹¸ì— ë–¨ì–´ì¡ŒìŒì„ ì˜ë¯¸í•œë‹¤. (
+//$1 \le H_R \le R$, 
+//$1 \le H_C \le C$)
 //
-//´ÙÇàÈ÷ ¿ì¸®ÀÇ ¾çÀº ´Á´ë¿¡°Ô ½Î¿òÀ» °É ¼ö ÀÖ°í ¿µ¿ª ¾ÈÀÇ ¾çÀÇ ¼ö°¡ ´Á´ëÀÇ ¼öº¸´Ù ¸¹´Ù¸é ÀÌ±â°í, ´Á´ë¸¦ ¿ì¸®¿¡¼­ ÂÑ¾Æ³½´Ù. ±×·¸Áö ¾Ê´Ù¸é ´Á´ë°¡ ±× Áö¿ª ¾ÈÀÇ ¸ğµç ¾çÀ» ¸Ô´Â´Ù.
+//ë§ˆì§€ë§‰ ì¤„ì—ëŠ” í•œë³„ì´ì˜ ì—¬í–‰ ê¸°ë¡ì„ ë‚˜íƒ€ë‚´ëŠ” 
+//$200\,000$ê¸€ì ì´í•˜ì˜ ë¬¸ìì—´ì´ ì£¼ì–´ì§„ë‹¤. ì—¬í–‰ ê¸°ë¡ì˜ ê° ë¬¸ìëŠ” U, D, L, R, W ì¤‘ í•˜ë‚˜ë¡œ ì´ë£¨ì–´ì ¸ ìˆìœ¼ë©°, U, D, L, Rì€ ê°ê° ìœ„, ì•„ë˜, ì™¼ìª½, ì˜¤ë¥¸ìª½ìœ¼ë¡œ í•œ ì¹¸ ì´ë™í–ˆë‹¤ëŠ” ëœ»ì´ê³ , WëŠ” ì§€ê¸ˆ ìˆëŠ” ì¹¸ì— ì™€ë“œë¥¼ ì„¤ì¹˜í–ˆë‹¤ëŠ” ëœ»ì´ë‹¤. í•œë³„ì´ê°€ ê²©ìë¥¼ ë²—ì–´ë‚˜ëŠ” ê²½ìš°ëŠ” ì£¼ì–´ì§€ì§€ ì•ŠëŠ”ë‹¤.
 //
-//¸Ç Ã³À½ ¸ğµç ¾ç°ú ´Á´ë´Â ¸¶´ç ¾È ¿µ¿ª¿¡ Á¸ÀçÇÑ´Ù.
+//ì¶œë ¥
+//â€Š
+//$R$ê°œì˜ ì¤„ì— ê±¸ì³ í•œë³„ì´ì˜ ì‹œì•¼ë¥¼ ì¶œë ¥í•œë‹¤. ê° ì¤„ì€ 
+//$C$ê°œì˜ ë¬¸ìë¡œ ë˜ì–´ ìˆì–´ì•¼ í•˜ë©°, 
+//$R$ë²ˆì§¸ ì¤„ 
+//$C$ë²ˆì§¸ ë¬¸ìê°€ .ì´ë¼ë©´ í•œë³„ì´ì˜ ì‹œì•¼ì— í•´ë‹¹ ì¹¸ì´ ë“¤ì–´ì™€ ìˆë‹¤ëŠ” ëœ»ì´ê³  #ì´ë¼ë©´ ê·¸ë ‡ì§€ ì•Šë‹¤ëŠ” ëœ»ì´ë‹¤.
 //
-//¾ÆÄ§ÀÌ µµ´ŞÇßÀ» ¶§ »ì¾Æ³²Àº ¾ç°ú ´Á´ëÀÇ ¼ö¸¦ Ãâ·ÂÇÏ´Â ÇÁ·Î±×·¥À» ÀÛ¼ºÇÏ¶ó.
-//
-//ÀÔ·Â
-//Ã¹ ÁÙ¿¡´Â µÎ Á¤¼ö R°ú C°¡ ÁÖ¾îÁö¸ç(3 ¡Â R, C ¡Â 250), °¢ ¼ö´Â ¸¶´çÀÇ Çà°ú ¿­ÀÇ ¼ö¸¦ ÀÇ¹ÌÇÑ´Ù.
-//
-//´ÙÀ½ R°³ÀÇ ÁÙÀº C°³ÀÇ ±ÛÀÚ¸¦ °¡Áø´Ù. ÀÌµéÀº ¸¶´çÀÇ ±¸Á¶(¿ïÅ¸¸®, ¾ç, ´Á´ëÀÇ À§Ä¡)¸¦ ÀÇ¹ÌÇÑ´Ù.
-//
-//Ãâ·Â
-//ÇÏ³ªÀÇ ÁÙ¿¡ ¾ÆÄ§±îÁö »ì¾ÆÀÖ´Â ¾ç°ú ´Á´ëÀÇ ¼ö¸¦ ÀÇ¹ÌÇÏ´Â µÎ Á¤¼ö¸¦ Ãâ·ÂÇÑ´Ù.
-//
-//¿¹Á¦ ÀÔ·Â 1 
-//6 6
-//...#..
-//.##v#.
-//#v.#.#
-//#.o#.#
-//.###.#
-//...###
-//¿¹Á¦ Ãâ·Â 1 
-//0 2
+//ì˜ˆì œ ì…ë ¥ 1 
+//4 5
+//aaabc
+//dcbbc
+//dccaa
+//ddaaa
+//3 4
+//WLLLWUURRD
+//ì˜ˆì œ ì¶œë ¥ 1 
+//##.##
+//....#
+//.#...
+//.....
 
 public class codingTest5 {
-	static char[][] map;
-	static boolean[][] visited;
 	static int n,m;
+	static char[][] map, arr;
+	static Queue<Character> d;//ì´ë™í•œê±°ë¦¬
 	static int[] dx = {0,0,1,-1};
 	static int[] dy = {1,-1,0,0};
-	
-	private static Queue<int[]> bfs(int i, int j) {
-		int sheep = 0;
-		int wolf = 0;
-		if(map[i][j] == 'v') {
-			wolf = 1;
-		}
-		if(map[i][j] == 'o') {
-			sheep = 1;
-		}
-		visited[i][j] = true;
-		Queue<int[]> q = new LinkedList<int[]>();
-		q.add(new int[] {i,j});
-		while (!q.isEmpty()) {
-			int y = q.peek()[0];
-			int x = q.peek()[1];
-			q.poll();
-			for(int k = 0; k<4; k++) {
-				int ny = y + dy[k];
-				int nx = x + dx[k];
-				if(ny<0 || ny>=n || nx<0 || nx>=m) continue;
-				if(visited[ny][nx] || map[ny][nx] == '#') continue;
-				visited[ny][nx] = true;
-				q.add(new int[] {ny,nx});
-				if(map[ny][nx] == 'o') {
-//					System.out.println("oÁõ°¡ "+ny+" "+nx);
-					sheep++;
+	static boolean[][] visited;
+	//í•´ë‹¹ìœ„ì¹˜ë¡œë¶€í„° ê°™ì€ ì•ŒíŒŒë²³ê¹Œì§€ arr ì „ë¶€ .ë¡œ í‘œì‹œ
+	private static void ward(int y, int x) {
+		char alpa = map[y][x];//ì™€ë“œê°€ ì„¤ì¹˜ë  ì•ŒíŒŒë²³
+		arr[y][x] = '.';
+		
+		visited = new boolean[n][m];
+		Queue<int[]> q = new LinkedList<>();
+		q.add(new int[] {y,x});
+		
+		while(!q.isEmpty()) {
+			int[] qp = q.poll();
+			int qp_y = qp[0];
+			int qp_x = qp[1];
+			
+			for(int i  = 0; i<4; i++) {
+				int ny = qp_y + dy[i];
+				int nx = qp_x + dx[i];
+				
+				if(ny>=0 && nx>=0 && ny<n && nx<m && map[ny][nx] == alpa && !visited[ny][nx]) {
+					arr[ny][nx] ='.';
+					visited[ny][nx] = true;
+					q.add(new int[] {ny,nx});
 				}
-				if(map[ny][nx] == 'v') {
-//					System.out.println("vÁõ°¡ "+ny+" "+nx);
-					wolf++;
-				}//if
-			}//for
+			}
 		}//while
-		Queue<int[]> q1 = new LinkedList<int[]>();
-		q1.add(new int[] {sheep, wolf});
-		return q1;
+		
+//		//í™•ì¸-----------------------------
+//		for(int i = 0; i<n; i++) {
+//			for(int j = 0; j<m; j++) {
+//				System.out.print(arr[i][j]);
+//			}
+//			System.out.println();
+//		}//for
+//		System.out.println();
+//		//í™•ì¸-----------------------------
+		
+	}
+	
+	// dë¥¼ ì´ìš©í•˜ì—¬ í•œë³„ì´ë¥¼ ì´ë™ì‹œí‚¤ë©´ì„œ arrì„ ê·¸ë ¤ë‚˜ê°ˆ í•¨ìˆ˜.
+	private static void bfs(int start_y, int start_x) {
+		//dì˜ ê°’ì„ í•˜ë‚˜ì”© ë¹¼ì„œ í•œë³„ì´ ì´ë™ì‹œí‚¨ í›„ wì¸ê²½ìš° arrì— .ê·¸ë¦¬ê¸°
+		while(!d.isEmpty()) {
+			char t = d.poll();
+			if(t == 'W') {//ì™€ë“œì„¤ì¹˜ì´ë©´
+				ward(start_y, start_x);
+			}//if
+			else if(t == 'L') {
+				start_x --;
+			}
+			else if(t == 'R') {
+				start_x ++;
+			}
+			else if(t == 'U') {
+				start_y --;
+			}
+			else{
+				start_y ++;
+			}//else
+//			System.out.println(start_y+" "+start_x);
+		}//while
+		//ë§ˆì§€ë§‰ í•œë³„ì´ì˜ ìœ„ì¹˜ë¡œë¶€í„° ë™ì„œë‚¨ë¶ arrì„ .ìœ¼ë¡œ ë°”ê¾¸ê¸°
+		arr[start_y][start_x] = '.';
+		for(int i = 0; i<4; i++) {
+			int end_y = start_y + dy[i];
+			int end_x = start_x + dx[i];
+			if(end_y>=0 && end_x>=0 && end_y<n && end_x<m) {
+				arr[end_y][end_x] ='.';
+			}
+		}
 	}
 	
 	public static void main(String[] args) throws NumberFormatException, IOException {
@@ -91,34 +133,40 @@ public class codingTest5 {
 		StringTokenizer st = new StringTokenizer(br.readLine());
 		n = Integer.parseInt(st.nextToken());
 		m = Integer.parseInt(st.nextToken());
+		
 		map = new char[n][m];
-		visited = new boolean[n][m];
+		arr = new char[n][m];
+		
 		for(int i = 0; i<n; i++) {
 			String s = br.readLine();
 			for(int j = 0; j<m; j++) {
-				map[i][j] = s.charAt(j); 
-			}//for
+				map[i][j] = s.charAt(j);
+				arr[i][j] = '#';
+			}
 		}//for
-		int sheep = 0;
-		int wolf = 0;
+		//í˜„ì¬ìœ„ì¹˜ ì…ë ¥ë°›ê¸°
+		int start_y, start_x;
+		st = new StringTokenizer(br.readLine());
+		start_y = Integer.parseInt(st.nextToken());
+		start_x = Integer.parseInt(st.nextToken());
+		
+		//ì´ë™ê±°ë¦¬
+		String distance = br.readLine();
+		d = new LinkedList<>();
+		for(int i = 0; i<distance.length(); i++) {
+			d.add(distance.charAt(i));
+		}//for
+//		System.out.print(d);
+		bfs(start_y-1, start_x-1);
+		
+		//í™•ì¸-----------------------------
 		for(int i = 0; i<n; i++) {
 			for(int j = 0; j<m; j++) {
-				//#ÀÌ°Å³ª ÀÌ¹Ì ¹æ¹®ÇßÀ¸¸é ÆĞ½º
-				if(visited[i][j] || map[i][j] == '#') continue;
-				Queue<int[]> sheep_wolf = bfs(i, j);
-				int sheep0 = sheep_wolf.peek()[0];
-				int wolf0 = sheep_wolf.peek()[1];
-				sheep_wolf.poll();
-				if(sheep0>wolf0) {
-					sheep += sheep0;
-				}
-				else {
-					wolf += wolf0;
-				}
-				
-			}//for
+				System.out.print(arr[i][j]);
+			}
+			System.out.println();
 		}//for
-		System.out.println(sheep+" "+wolf);		
+		//í™•ì¸-----------------------------
 	}
 
 }
