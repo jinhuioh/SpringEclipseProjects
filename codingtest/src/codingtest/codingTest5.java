@@ -142,7 +142,7 @@ public class codingTest5 {
 			for(int j = 0; j<m; j++) {
 				map[i][j] = s.charAt(j);
 				arr[i][j] = '#';
-			}
+			} 
 		}//for
 		//현재위치 입력받기
 		int start_y, start_x;
