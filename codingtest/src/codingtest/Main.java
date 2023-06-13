@@ -18,39 +18,56 @@ import java.util.StringTokenizer;
 import javax.management.Query;
 import javax.swing.JPopupMenu.Separator;
 
-//피보나치 수는 0과 1로 시작한다. 0번째 피보나치 수는 0이고, 1번째 피보나치 수는 1이다. 그 다음 2번째 부터는 바로 앞 두 피보나치 수의 합이 된다.
-//
-//이를 식으로 써보면 Fn = Fn-1 + Fn-2 (n ≥ 2)가 된다.
-//
-//n=17일때 까지 피보나치 수를 써보면 다음과 같다.
-//
-//0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610, 987, 1597
-//
-//n이 주어졌을 때, n번째 피보나치 수를 구하는 프로그램을 작성하시오.
-//
 //입력
-//첫째 줄에 n이 주어진다. n은 20보다 작거나 같은 자연수 또는 0이다.
+//첫째 줄에 테스트 케이스의 개수 T가 주어진다. 각 테스트 케이스의 첫째 줄에는 n (1 ≤ n ≤ 100,000)이 주어진다. 
+//다음 두 줄에는 n개의 정수가 주어지며, 각 정수는 그 위치에 해당하는 스티커의 점수이다. 연속하는 두 정수 사이에는 빈 칸이 하나 있다. 
+//점수는 0보다 크거나 같고, 100보다 작거나 같은 정수이다. 
 //
 //출력
-//첫째 줄에 n번째 피보나치 수를 출력한다.
-
-//1. 재귀를 사용한 방법
-//2. dp를 사용한 방법
+//각 테스트 케이스 마다, 2n개의 스티커 중에서 두 변을 공유하지 않는 스티커 점수의 최댓값을 출력한다.
+//
+//예제 입력 1 
+//2
+//5
+//50 10 100 20 40
+//30 50 70 10 60
+//7
+//10 30 10 50 100 20 40
+//20 40 30 50 60 20 80
+//예제 출력 1 
+//260
+//290
 
 public class Main {
 	public static void main(String[] args)throws Exception {
 		Scanner sc = new Scanner(System.in);
-		int n = sc.nextInt();
-		int[] dp = new int[n+2];
-		dp[0] = 0;
-		dp[1] = 1;
-		if(n>=2) {
-			for(int i=2; i<=n+1; i++) {
-				dp[i] = dp[i-1]+dp[i-2];
-//				System.out.println(dp[i]);
+		int n = sc.nextInt();//테스트케이스 개수
+		for(int i = 0; i < n; i++) {
+			int d = sc.nextInt();//스티커 개수
+			int[][] dp = new int[2][d+1];
+			
+			for(int k = 0; k<2; k++) {
+				for(int j = 1; j<d+1; j++) {
+					dp[k][j] = sc.nextInt();
+				}
 			}//for
-		}
-		System.out.println(dp[n]);
+			for(int k = 2; k<d+1; k++) {
+					dp[0][k] = Math.max(dp[1][k-2], dp[1][k-1])+dp[0][k];
+					dp[1][k] = Math.max(dp[0][k-2], dp[0][k-1])+ dp[1][k];
+					
+//					for(int p = 0; p<2; p++) {
+//						for(int l = 0; l<d; l++) {
+//							System.out.print(dp[p][l]+" ");
+//						}
+//						System.out.println();
+//					}
+//					System.out.println();
+			}//for
+			int max_num = Math.max(dp[0][d], dp[1][d]);
+			System.out.println(max_num);
+		}//for
+		
+		
 	}
 }
 
