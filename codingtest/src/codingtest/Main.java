@@ -17,55 +17,40 @@ import java.util.LinkedList;
 import java.util.StringTokenizer;
 import javax.management.Query;
 import javax.swing.JPopupMenu.Separator;
-//문제
+
+//피보나치 수는 0과 1로 시작한다. 0번째 피보나치 수는 0이고, 1번째 피보나치 수는 1이다. 그 다음 2번째 부터는 바로 앞 두 피보나치 수의 합이 된다.
+//
+//이를 식으로 써보면 Fn = Fn-1 + Fn-2 (n ≥ 2)가 된다.
+//
+//n=17일때 까지 피보나치 수를 써보면 다음과 같다.
+//
+//0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610, 987, 1597
+//
+//n이 주어졌을 때, n번째 피보나치 수를 구하는 프로그램을 작성하시오.
+//
 //입력
-//첫째 줄에 지도의 세로 크기 N과 가로 크기 M이 주어진다. (3 ≤ N, M ≤ 8)
-//
-//둘째 줄부터 N개의 줄에 지도의 모양이 주어진다. 0은 빈 칸, 1은 벽, 2는 바이러스가 있는 위치이다. 2의 개수는 2보다 크거나 같고, 10보다 작거나 같은 자연수이다.
-//
-//빈 칸의 개수는 3개 이상이다.
+//첫째 줄에 n이 주어진다. n은 20보다 작거나 같은 자연수 또는 0이다.
 //
 //출력
-//첫째 줄에 얻을 수 있는 안전 영역의 최대 크기를 출력한다.
-//
-//예제 입력 1 
-//7 7
-//2 0 0 0 1 1 0
-//0 0 1 0 1 2 0
-//0 1 1 0 1 0 0
-//0 1 0 0 0 0 0
-//0 0 0 0 0 1 1
-//0 1 0 0 0 0 0
-//0 1 0 0 0 0 0
-//예제 출력 1 
-//27
+//첫째 줄에 n번째 피보나치 수를 출력한다.
+
+//1. 재귀를 사용한 방법
+//2. dp를 사용한 방법
+
 public class Main {
-	static int n,m;
-	static boolean[][] visited;
-	static int[][] map;
-	static int[] dx = {0,0,1,-1};
-	static int[] dy = {1,-1,0,0};
-	//1. 벽 세우는 함수
-	//2. 바이러스 증가 함수
-	
-	
 	public static void main(String[] args)throws Exception {
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		StringTokenizer st = new StringTokenizer(br.readLine());
-		n = Integer.parseInt(st.nextToken());
-		m = Integer.parseInt(st.nextToken());
-		
-		map = new int[n][m];
-		visited = new boolean[n][m];
-		
-		for(int  i = 0; i < n; i++) {
-			st = new StringTokenizer(br.readLine());
-			for(int j = 0; j < m; j++) {
-				map[i][j] = Integer.parseInt(st.nextToken());
+		Scanner sc = new Scanner(System.in);
+		int n = sc.nextInt();
+		int[] dp = new int[n+2];
+		dp[0] = 0;
+		dp[1] = 1;
+		if(n>=2) {
+			for(int i=2; i<=n+1; i++) {
+				dp[i] = dp[i-1]+dp[i-2];
+//				System.out.println(dp[i]);
 			}//for
-		}//for
-		
-		
+		}
+		System.out.println(dp[n]);
 	}
 }
 
